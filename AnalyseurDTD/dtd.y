@@ -24,35 +24,28 @@ dtd_list_opt
 ;
 
 dtd_declaration
-: ELEMENT IDENT seq
+: ELEMENT IDENT list
 | ATTLIST IDENT att_definition_opt
 ;
 
-children
-: choice_card
-| seq_card
+list
+: seq
+| enumerate
 ;
 
-choice_card
-: enumerate card_opt
-;
-
-seq_card
-: seq card_opt
-;
-
-/* definition des elements */
 seq
 : OPENPAR seq_list CLOSEPAR
 ;
 
 seq_list
 : seq_list COMMA cp
+| cp
 ;
 
 cp
 : IDENT card_opt
-| children
+| enumerate card_opt
+| seq card_opt
 ;
 
 card_opt
@@ -86,8 +79,9 @@ enum_list_plus
 ;
 
 enum_list
-: item_enum
-| enum_list PIPE item_enum
+: enum_list PIPE item_enum
+| item_enum
+| PCDATA
 ;
 
 item_enum

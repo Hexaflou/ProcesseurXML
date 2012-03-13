@@ -14,7 +14,7 @@
 *.a
 
 *.tab.c 
-lex.*.c 
+*/lex.*.c 
 *.tab.h
 
 *.output

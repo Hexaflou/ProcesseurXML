@@ -21,7 +21,7 @@ int yylex(void);
 %%
 
 document
- : declarations_opt xml_element misc_seq_opt 
+ : declarations_opt xml_element misc_seq_opt
  ;
 misc_seq_opt
  : misc_seq_opt comment
@@ -65,7 +65,7 @@ start
  ;
 empty_or_content
  : SLASH CLOSE	
- | close_content_and_end CLOSE 
+ | close_content_and_end CLOSE
  ;
 close_content_and_end
  : CLOSE	content_opt END 

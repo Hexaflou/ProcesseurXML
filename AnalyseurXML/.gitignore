@@ -1,1 +1,3 @@
 analyseXML
+lex.*.c
+*.tab.c

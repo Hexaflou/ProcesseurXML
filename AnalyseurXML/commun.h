@@ -3,11 +3,12 @@
 
 using namespace std;
 #include <list>
+#include <map>
 #include <utility>
 #include <string>
 
 typedef pair<string,string> Attribut;
-typedef list<Attribut> AttList;
+typedef map<string,string> AttMap;
 typedef pair<string,string> ElementName;
 
 #ifdef DEBUG

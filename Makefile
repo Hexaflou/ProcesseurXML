@@ -3,8 +3,7 @@ CFLAGS = -Wall
 EXEC_NAME = Xylo
 INCLUDES =
 LIBS =
-OBJ_FILES = $(wildcard *.o)
-INSTALL_DIR = /usr/bin
+OBJ_FILES = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.c,%.o,$(wildcard AnalyseurXML/*.c))
 
 all : $(EXEC_NAME)
 
@@ -22,6 +21,3 @@ $(EXEC_NAME) : $(OBJ_FILES)
 
 %.o: %.c
 	gcc $(CFLAGS) $(INCLUDES) -o $@ -c $<
-
-install :
-	cp $(EXEC_NAME) $(INSTALL_DIR)

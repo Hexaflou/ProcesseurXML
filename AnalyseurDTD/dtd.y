@@ -13,14 +13,54 @@ int yylex(void);
 %token <s> IDENT TOKENTYPE DECLARATION STRING
 %%
 
-main: dtd_list_opt 
-    ;
-
-dtd_list_opt
-: dtd_list_opt ATTLIST IDENT att_definition_opt CLOSE            
-| /* empty */                     
+main
+: dtd_list_opt
 ;
 
+
+dtd_list_opt
+: dtd_list_opt dtd_declaration CLOSE
+| /* empty */
+;
+
+dtd_declaration
+: ELEMENT IDENT seq
+| ATTLIST IDENT att_definition_opt
+;
+
+children
+: choice_card
+| seq_card
+;
+
+choice_card
+: enumerate card_opt
+;
+
+seq_card
+: seq card_opt
+;
+
+/* definition des elements */
+seq
+: OPENPAR seq_list CLOSEPAR
+;
+
+seq_list
+: seq_list COMMA cp
+;
+
+cp
+: IDENT card_opt
+| children
+;
+
+card_opt
+: QMARK
+| PLUS
+| AST
+| /* empty */
+;
 
 att_definition_opt
 : att_definition_opt attribute
@@ -32,7 +72,7 @@ attribute
 ;
 
 att_type
-: CDATA    
+: CDATA
 | TOKENTYPE
 | enumerate
 ;
@@ -46,7 +86,7 @@ enum_list_plus
 ;
 
 enum_list
-: item_enum               
+: item_enum
 | enum_list PIPE item_enum
 ;
 

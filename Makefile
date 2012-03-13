@@ -1,25 +1,23 @@
-CC=g++
-RM = rm
-ECHO = @echo
-RMFLAGS	= -f
-CFLAGS=-c -Wall
-LDFLAGS=
-SRC=main.cpp
-OBJS=$(SOURCES:.cpp=.o)
-EXE=Xylo
+CC = g++
+CFLAGS = -Wall
+EXEC_NAME = Xylo
+INCLUDES =
+LIBS =
+OBJ_FILES = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.c,%.o,$(wildcard AnalyseurXML/*.c))
 
-all: $(SRC) $(EXE)
-	
-$(EXE): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+all : $(EXEC_NAME)
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+clean :
+	rm $(EXEC_NAME) $(OBJ_FILES)
 
-clean:
-	$(ECHO) nettoyage des binaires translatables
-	$(RM) $(RMFLAGS) $(OBJS) core
+$(EXEC_NAME) : $(OBJ_FILES)
+	$(CC) -o $(EXEC_NAME) $(OBJ_FILES) $(LIBS)
 
-cleanall: clean
-	$(ECHO) nettoyage de l executable
-	$(RM) $(RMFLAGS) $(EXE)
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+
+%.o: %.cc
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+
+%.o: %.c
+	gcc $(CFLAGS) $(INCLUDES) -o $@ -c $<

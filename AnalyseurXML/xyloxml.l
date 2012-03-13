@@ -3,7 +3,7 @@
 
 %{
 #include "commun.h"
-#include "yy.tab.h"
+#include "xyloxml.tab.h"
 
 static char* skipSpace(char *s) {
   char *buf;
@@ -97,18 +97,18 @@ closespecial "?>"{nl}?
 <INITIAL>"="		{ return EQ;}
 <INITIAL>{close}	{ BEGIN(CONTENT); return CLOSE;}
 <INITIAL>{closespecial}	{ return CLOSESPECIAL;}
-<INITIAL>{name}		{ yylval.s = strdup(yytext); return IDENT;}
-<INITIAL>{nsname}		{ yylval.s = strdup(yytext); return NSIDENT;}
-<INITIAL>{string}	{ yylval.s = strdup(getString(yytext)); return STRING;}
+<INITIAL>{name}		{ xyloxmllval.s = strdup(xyloxmltext); return IDENT;}
+<INITIAL>{nsname}		{ xyloxmllval.s = strdup(xyloxmltext); return NSIDENT;}
+<INITIAL>{string}	{ xyloxmllval.s = strdup(getString(xyloxmltext)); return STRING;}
 
-{openspecial}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(yytext); yylval.en = new ElementName("",tmp); free(tmp); return STARTSPECIAL;}
-{open}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(yytext); yylval.en = new ElementName("",tmp); free(tmp); return START;}
-{open}{ws}?{nsname}	{ BEGIN(INITIAL); char *tmp1 = nameSpace(yytext); char * tmp2 = split_namespace(yytext); yylval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSSTART;}
-{open}"/"{name}		{BEGIN(INITIAL); char * tmp = word(yytext); yylval.en = new ElementName("",tmp); free(tmp); return END;}
-{open}"/"{nsname}		{BEGIN(INITIAL); char *tmp1 = nameSpace(yytext); char * tmp2 = split_namespace(yytext); yylval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSEND;}
-{comment}		{ yylval.s = strdup(yytext); return COMMENT;}
+{openspecial}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xyloxmltext); xyloxmllval.en = new ElementName("",tmp); free(tmp); return STARTSPECIAL;}
+{open}{ws}?{name}	{ BEGIN(INITIAL); char * tmp = word(xyloxmltext); xyloxmllval.en = new ElementName("",tmp); free(tmp); return START;}
+{open}{ws}?{nsname}	{ BEGIN(INITIAL); char *tmp1 = nameSpace(xyloxmltext); char * tmp2 = split_namespace(xyloxmltext); xyloxmllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSSTART;}
+{open}"/"{name}		{BEGIN(INITIAL); char * tmp = word(xyloxmltext); xyloxmllval.en = new ElementName("",tmp); free(tmp); return END;}
+{open}"/"{nsname}		{BEGIN(INITIAL); char *tmp1 = nameSpace(xyloxmltext); char * tmp2 = split_namespace(xyloxmltext); xyloxmllval.en = new ElementName(tmp1,tmp2); free(tmp1); free(tmp2); return NSEND;}
+{comment}		{ xyloxmllval.s = strdup(xyloxmltext); return COMMENT;}
 
-<CONTENT>{ws}?{pcdata}		{ yylval.s = strdup(skipSpace(yytext)); return DATA;}
+<CONTENT>{ws}?{pcdata}		{ xyloxmllval.s = strdup(skipSpace(xyloxmltext)); return DATA;}
 
-.			{ fprintf(stderr, "!ERROR(%c)\n", *yytext);}
+.			{ fprintf(stderr, "!ERROR(%c)\n", *xyloxmltext);}
 

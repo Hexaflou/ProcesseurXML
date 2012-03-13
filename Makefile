@@ -3,7 +3,7 @@ CFLAGS = -Wall
 EXEC_NAME = Xylo
 INCLUDES =
 LIBS =
-OBJ_FILES = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+OBJ_FILES = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.c,%.o,$(wildcard AnalyseurXML/*.c))
 
 all : $(EXEC_NAME)
 

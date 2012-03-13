@@ -25,24 +25,40 @@ document
  ;
 misc_seq_opt
  : misc_seq_opt comment
- | /*empty*/
+ | /*empty*/ 
  ;
 comment
  : COMMENT
  ;
 
 declarations_opt
- : declaration
+ : dec_header dec_doctype
+ | dec_header
+ | dec_doctype
  | /*empty*/
  ;
  
-declaration
+dec_header
+ : STARTSPECIAL attributes_opt CLOSESPECIAL
+ ;
+
+dec_doctype
  : DOCTYPE IDENT IDENT STRING CLOSE 
  ;
 
 xml_element
- : start empty_or_content 
+ : start attributes_opt empty_or_content 
  ;
+
+attributes_opt
+ : attributes_opt attribute
+ | /* empty */
+ ;
+
+attribute
+ : IDENT EQ STRING
+ ;
+
 start
  : START		
  | NSSTART	

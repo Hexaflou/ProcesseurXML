@@ -13,6 +13,10 @@
 *.la
 *.a
 
+*.tab.c 
+lex.*.c 
+*.tab.h
+
 *.output
 
 *~

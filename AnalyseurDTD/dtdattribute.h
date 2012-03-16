@@ -3,12 +3,19 @@
 
 #include <string>
 
+class DtdElement;
+
 class DtdAttribute {
 	
 	std::string name;
+	DtdElement * parent;
 	
 	public :
-		DtdAttribute(name);
+		DtdAttribute(std::string name, DtdElement * element);
+		
+		//getter
+		std::string getName();
+		std::string toString();
 		
 }
 

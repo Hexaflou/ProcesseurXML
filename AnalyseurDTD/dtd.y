@@ -29,25 +29,27 @@ dtd_declaration
 ;
 
 list
-: seq
-| enumerate
+: enumerate
+| seq
 ;
 
+/* SEQUENCE */
 seq
 : OPENPAR seq_list CLOSEPAR
 ;
-
 seq_list
 : seq_list COMMA cp
 | cp
+| PCDATA
+| /*empty*/
 ;
-
 cp
 : IDENT card_opt
 | enumerate card_opt
 | seq card_opt
 ;
 
+/* GENERAL */
 card_opt
 : QMARK
 | PLUS
@@ -55,44 +57,43 @@ card_opt
 | /* empty */
 ;
 
+/* ATTRIBUTS */
 att_definition_opt
 : att_definition_opt attribute
 | /* empty */
 ;
-
 attribute
 : IDENT att_type default_declaration
 ;
-
 att_type
 : CDATA
 | TOKENTYPE
-| enumerate
+| list
 ;
-
-enumerate
-: OPENPAR enum_list_plus CLOSEPAR
-;
-
-enum_list_plus
-: enum_list PIPE item_enum
-;
-
-enum_list
-: enum_list PIPE item_enum
-| item_enum
-| PCDATA
-;
-
-item_enum
-: IDENT
-;
-
 default_declaration
 : DECLARATION 
 | STRING     
 | FIXED STRING 
 ;
+
+/* ENUMERATE */
+enumerate
+: OPENPAR enum_list_plus CLOSEPAR
+;
+enum_list_plus
+: enum_list PIPE item_enum
+;
+enum_list
+: enum_list PIPE item_enum
+| item_enum
+| PCDATA
+;
+item_enum
+: IDENT
+;
+
+
+
 %%
 int main(int argc, char **argv)
 {

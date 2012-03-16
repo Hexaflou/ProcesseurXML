@@ -23,6 +23,10 @@ int yylex(void);
 
 %%
 
+main:
+document
+;
+
 document
  : declarations_opt xml_element misc_seq_opt
  ;
@@ -31,7 +35,7 @@ misc_seq_opt
  | /*empty*/ 
  ;
 comment
- : COMMENT	{$$ = new string($1);}
+ : COMMENT
  ;
 
 declarations_opt
@@ -46,38 +50,38 @@ dec_header
  ;
 
 dec_doctype
- : DOCTYPE IDENT IDENT STRING CLOSE 
+ : DOCTYPE IDENT IDENT STRING CLOSE 	{$$= new Doctype($1,$2,$3);}
  ;
 
 xml_element
- : start attributes_opt empty_or_content 
+ : start attributes_opt empty_or_content { $$ = new XmlNode($1, $2, $3);} /* parent ? */
  ;
 
 attributes_opt
- : attributes_opt attribute
- | /* empty */
+ : attributes_opt attribute		{$$ = $1; (*$1)[$2->first]=$2->second;}
+ | /* empty */				{$$ = new map<string,string>();}
  ;
 
 attribute
- : IDENT EQ STRING
+ : IDENT EQ STRING			{$$ = new pair<string,string>($1,$3);}
  ;
 
 start
- : START		
- | NSSTART	
+ : START				{$$=$1;}
+ | NSSTART				{$$=$1;}
  ;
 empty_or_content
- : SLASH CLOSE	
- | close_content_and_end CLOSE
+ : SLASH CLOSE				{}
+ | close_content_and_end CLOSE		{$$=$1;}
  ;
 close_content_and_end
- : CLOSE	content_opt END 
+ : CLOSE	content_opt END 	{$$=$2;}
  ;
 content_opt 
- : content_opt DATA		
+ : content_opt DATA			{$$=$1; $$->push_back(new Cdata($2));}
  | content_opt comment        
- | content_opt xml_element      
- | /*empty*/         
+ | content_opt xml_element      	{$$=$1; $$->push_back($2);}
+ | /*empty*/         			{$$ = new vector<XmlElement>();}
  ;
 %%
 

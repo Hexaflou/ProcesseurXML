@@ -9,6 +9,9 @@ int yylex(void);
 
 %}
 
+%parse-param {Document *d}
+
+
 %union {
    char * s;
    ElementName * en;  /* le nom d'un element avec son namespace */
@@ -28,7 +31,7 @@ misc_seq_opt
  | /*empty*/ 
  ;
 comment
- : COMMENT
+ : COMMENT	{$$ = new string($1);}
  ;
 
 declarations_opt

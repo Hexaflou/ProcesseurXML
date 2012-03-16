@@ -5,6 +5,8 @@ int yywrap(void);
 int yylex(void);
 %}
 
+%parse-param {DtdDoc *d}
+
 %union { 
    char *s; 
    }
@@ -13,57 +15,58 @@ int yylex(void);
 %token <s> IDENT TOKENTYPE DECLARATION STRING
 %%
 
+
 main
-: dtd_list_opt
+: dtd_list_opt				
 ;
 
 
 dtd_list_opt
-: dtd_list_opt dtd_declaration CLOSE
-| /* empty */
+: dtd_list_opt dtd_declaration CLOSE	{d->addElement($2);}
+| /* empty */		
 ;
 
 dtd_declaration
-: ELEMENT IDENT list
-| ATTLIST IDENT att_definition_opt
+: ELEMENT IDENT list	{$$ = new DtdElement($2); $$->completeChildPattern($3);}
+| ATTLIST IDENT att_definition_opt {for(int i = 0; i < $3->size(); i++) { d->addAttributetoElement($2,(*$3)[i]);}}
 ;
 
 list
-: enumerate
-| seq
+: enumerate		{$$ = $1;}
+| seq			{$$ = $1;}
 ;
 
 /* SEQUENCE */
 seq
-: OPENPAR seq_list CLOSEPAR card_opt
+: OPENPAR seq_list CLOSEPAR card_opt	{$$ = new string("("); $$ += $2+ ")" + $3;}
 ;
 seq_list
-: seq_list COMMA cp
-| cp
-| PCDATA
-| /*empty*/
+: seq_list COMMA cp	{$$ = $1+","+$2;}
+| cp			{$$ = $1;}
+| PCDATA		{$$ = $1;}
+| /*empty*/		{$$ = new string("");}
 ;
 cp
-: IDENT card_opt
-| enumerate card_opt
-| seq card_opt
+: IDENT card_opt	{$$ = new string($1); $$+=$2;}
+| enumerate card_opt	{$$ = $1+$2;} 
+| seq card_opt		{$$ = $1+$2;}
 ;
 
 /* GENERAL */
 card_opt
-: QMARK
-| PLUS
-| AST
-| /* empty */
+: QMARK			{$$ = new string("?");}
+| PLUS			{$$ = new string("+");}
+| AST			{$$ = new string("*");}
+| /* empty */		{$$ = new string("");}
 ;
 
 /* ATTRIBUTS */
 att_definition_opt
-: att_definition_opt attribute
-| /* empty */
+: att_definition_opt attribute	{$$=$1; $$->push_back($2);}
+| /* empty */	{$$ = new vector<string>();}
 ;
 attribute
-: IDENT att_type default_declaration
+: IDENT att_type default_declaration	{$$ = new string($1);}
 ;
 att_type
 : CDATA
@@ -78,18 +81,18 @@ default_declaration
 
 /* ENUMERATE */
 enumerate
-: OPENPAR enum_list_plus CLOSEPAR card_opt
+: OPENPAR enum_list_plus CLOSEPAR card_opt {$$ = new string("("); $$ += $2+ ")" + $3;}
 ;
 enum_list_plus
-: enum_list PIPE item_enum
+: enum_list PIPE item_enum	{$$ = $1+"|"+$2;}
 ;
 enum_list
-: enum_list PIPE item_enum
-| item_enum
-| PCDATA
+: enum_list PIPE item_enum	{$$ = $1+"|"+$2;}
+| item_enum			{$$ = $1;}
+| PCDATA	{$$ = new string($1);}
 ;
 item_enum
-: IDENT
+: IDENT		{$$ = new string($1);}
 ;
 
 

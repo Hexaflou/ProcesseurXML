@@ -74,7 +74,7 @@ any "ANY"
 %%
 
 <INITIAL>{ws}		            { /* skip */}
-<INITIAL>{element}            { BEGIN(INSIDE); char* tmp = word(xylodtdtext); xylodtdval.en = new DtdElement(tmp); free(tmp); return ELEMENT; }
+<INITIAL>{element}            { BEGIN(INSIDE); return ELEMENT; }
 <INITIAL>{attlist}            { BEGIN(INSIDE); return ATTLIST; }
 <INSIDE>{close}               { BEGIN(INITIAL); return CLOSE; }
 <INSIDE>{openpar}             { return OPENPAR; }

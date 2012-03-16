@@ -35,7 +35,7 @@ list
 
 /* SEQUENCE */
 seq
-: OPENPAR seq_list CLOSEPAR
+: OPENPAR seq_list CLOSEPAR card_opt
 ;
 seq_list
 : seq_list COMMA cp
@@ -78,7 +78,7 @@ default_declaration
 
 /* ENUMERATE */
 enumerate
-: OPENPAR enum_list_plus CLOSEPAR
+: OPENPAR enum_list_plus CLOSEPAR card_opt
 ;
 enum_list_plus
 : enum_list PIPE item_enum

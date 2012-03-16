@@ -22,12 +22,12 @@ class XmlNode : public XmlElement {
 		XmlNode(std::string ns, std::string name, XmlNode * parent=0);
 		
 		//Methodes d'ajout
-		//Ajoute un attribut au noeud, retourne vrai si succes et faux si l'atttribut existe déjà.
+		//Ajoute un attribut au noeud, retourne vrai si succes et faux si l'attribut existe déjà.
 		bool addAttribute(Attribut att); 
 		bool addAttribute(std::string name, std::string content);
 		
 		//Ajoute un fils au noeud.
-		void addChild(XmlElement element);
+		void addChild(XmlElement * element);
 		
 		//Getters
 		virtual std::string toString();

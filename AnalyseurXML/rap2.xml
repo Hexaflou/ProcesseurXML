@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE rapport SYSTEM "rap2.dtd">
+<!DOCTYPE rapport SYSTEM "rap3.dtd">
 <rapport>
  <titre>Realiser un compilateur</titre>
  <auteur>
@@ -17,7 +17,7 @@
 	doit executer le programme ainsi traduit est appele machine cible.</p>
    </section>
 
-   <section titre="R�alisation d'un compilateur">
+   <section titre="Realisation d'un compilateur">
     <p>Comme l'ecriture d'un compilateur est une tache fort complexe, 
 	le programmateur a tout interet e travailler en utilisant un langage 
 	de programmation de haut niveau.</p>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE rapport SYSTEM "rap1.dtd">
 <rapport>
   <titre>Realiser un compilateur</titre>

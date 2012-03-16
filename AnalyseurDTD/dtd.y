@@ -35,15 +35,13 @@ list
 
 /* SEQUENCE */
 seq
-: OPENPAR seq_list_plus CLOSEPAR
-;
-seq_list_plus
-: seq_list COMMA cp
+: OPENPAR seq_list CLOSEPAR
 ;
 seq_list
 : seq_list COMMA cp
 | cp
 | PCDATA
+| /*empty*/
 ;
 cp
 : IDENT card_opt

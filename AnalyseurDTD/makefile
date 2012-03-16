@@ -1,8 +1,10 @@
+DTDPREFIX=xylodtd
+
 all: analyseDTD
 analyseDTD: *.l *.y makefile
-	flex dtd.l
-	bison --debug --verbose --defines=yy.tab.h dtd.y
-	g++ -g -DYYDEBUG=1 -o analyseDTD  lex.yy.c dtd.tab.c 
+	flex -P$(DTDPREFIX) $(DTDPREFIX).l
+	bison -p$(DTDPREFIX) --debug --verbose --defines=$(DTDPREFIX).tab.h $(DTDPREFIX).y
+	g++ -g -DYYDEBUG=1 -o analyseDTD  lex.$(DTDPREFIX).c  $(DTDPREFIX).tab.c 
 clean:
 	-rm -rf *.tab.c lex.*.c *.tab.h *.output analyseDTD
 

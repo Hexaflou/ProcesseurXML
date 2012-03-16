@@ -7,4 +7,3 @@
 <!ELEMENT section (titre, p+)>
 <!ELEMENT p (#PCDATA)>
 <!ELEMENT titre (#PCDATA)>
-<!ELEMENT test (titre | section)>

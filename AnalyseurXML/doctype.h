@@ -12,6 +12,9 @@ class Doctype {
 	Doctype(std::string nomRacine, std::string portee, std::string dtdUrl);
 	
 	Doctype(std::string nomRacine, bool portee, std::string dtdUrl);
+	
+	//Getter
+	std::string toString();
 }
 
 #endif

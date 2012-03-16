@@ -8,7 +8,9 @@
 class DtdDoc {
 	
 	std::string filepath ;
-	std::set<DtdElement> ;
+	std::set<DtdElement> elements ;
+	//for the return of an insert in the attribute list.
+	typedef pair<set<DtdElement>::iterator,bool> RetType;
 		
 	public :
 		DtdDoc(std::string filepath);
@@ -19,6 +21,8 @@ class DtdDoc {
 		// attribut existe déjà
 		// element inexistant
 		bool addAttributetoElement(std::string elementName, std::string attribut);
+		
+		std::string toString();
 	
 }
 

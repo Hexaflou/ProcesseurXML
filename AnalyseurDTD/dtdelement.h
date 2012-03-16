@@ -5,6 +5,8 @@
 #include <string>
 #include <set>
 
+#include  "dtdattribute.h"
+
 class DtdElement {
 
 	std::string name;
@@ -12,7 +14,10 @@ class DtdElement {
 	//remarque c'est un set d'attributs, dans le cadre 
 	//d'une evolutivité il faudrai remplacer ce string 
 	//par un objet de type attribut
-	std::set<std::string> attributs;
+	std::set<DtdAttribute> attributs;
+	//for the return of an insert in the attribute list.
+	typedef pair<set<DtdAttribute>::iterator,bool> RetType;
+	
 	//represente les fils autorisees sous forme de regex;
 	regex_t childs;
 	//directement tiree du fichier le patern regex
@@ -21,7 +26,26 @@ class DtdElement {
 	public :
 		DtdElement(std::string name);
 		bool addAttribute(std::string name);
+		
+		std::string getName();
+		
+		//retourne l'élément sous forme de chaine.
+		std::string toString();
+		std::string attributeListToString();
+		
 		void completeChildPattern(std::string r);//TODO:c'est tout pour le moment
+		
+		
+		
+		//TODO:implementer les fonctions de verification
+		//verifie si la liste de fils (sous forme de string séparé par des virgules)
+		//récupéré depuis un xml est conforme à la dtd. retourne vrai si valide.
+		//bool checkXMLChildren(std::string liste);
 }
+
+//surcharge d'opérateur pour utilisation dans un set
+bool operator<(DtdElement const &a, DtdElement const& b);
+bool operator==(DtdElement const &a, DtdElement const& b);
+
 
 #endif

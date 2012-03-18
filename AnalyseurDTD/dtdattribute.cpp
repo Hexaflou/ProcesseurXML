@@ -21,6 +21,28 @@ string DtdAttribute::toString()
 	return name +" CDATA #IMPLIED";
 }
 
+//Surcharges d'opérateur
+
+bool operator<=(DtdAttribute const &a, DtdAttribute const& b)
+{
+	return a.getName() <= b.getName();
+}
+
+bool operator>(DtdAttribute const &a, DtdAttribute const& b)
+{
+	return a.getName() > b.getName();
+}
+
+bool operator>=(DtdAttribute const &a, DtdAttribute const& b)
+{
+	return a.getName() >= b.getName();
+}
+
+bool operator!=(DtdAttribute const &a, DtdAttribute const& b)
+{
+	return a.getName() != b.getName();
+}
+
 bool operator<(DtdAttribute const &a, DtdAttribute const& b)
 {
 	return a.getName() < b.getName();

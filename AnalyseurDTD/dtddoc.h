@@ -10,7 +10,7 @@ class DtdDoc {
 	std::string filepath ;
 	std::set<DtdElement> elements ;
 	//for the return of an insert in the attribute list.
-	typedef pair<set<DtdElement>::iterator,bool> RetType;
+	typedef std::pair<std::set<DtdElement>::iterator,bool> RetElemInsert;
 		
 	public :
 		DtdDoc(std::string filepath);
@@ -20,10 +20,10 @@ class DtdDoc {
 		//renvoi faux en cas d'erreur ->erreurs possibles :
 		// attribut existe déjà
 		// element inexistant
-		bool addAttributetoElement(std::string elementName, std::string attribut);
+		bool addAttributetoElement(std::string const &elementName, std::string const &attribut);
 		
-		std::string toString();
+		std::string toString() const;
 	
-}
+};
 
 #endif

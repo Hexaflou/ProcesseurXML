@@ -17,10 +17,14 @@ class DtdAttribute {
 		std::string getName() const;
 		std::string toString() const;
 		
-}
+};
 
 //surcharge d'opérateur pour utilisation dans un set
 bool operator<(DtdAttribute const &a, DtdAttribute const& b);
+bool operator<=(DtdAttribute const &a, DtdAttribute const& b);
+bool operator>(DtdAttribute const &a, DtdAttribute const& b);
+bool operator>=(DtdAttribute const &a, DtdAttribute const& b);
 bool operator==(DtdAttribute const &a, DtdAttribute const& b);
+bool operator!=(DtdAttribute const &a, DtdAttribute const& b);
 
 #endif

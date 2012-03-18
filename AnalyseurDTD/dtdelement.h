@@ -1,7 +1,7 @@
 #ifndef DTDELEMENT_H
 #define DTDELEMENT_H
 
-#include <regex>
+#include <regex.h>
 #include <string>
 #include <set>
 
@@ -16,7 +16,7 @@ class DtdElement {
 	//par un objet de type attribut
 	std::set<DtdAttribute> attributs;
 	//for the return of an insert in the attribute list.
-	typedef pair<set<DtdAttribute>::iterator,bool> RetType;
+	typedef std::pair<std::set<DtdAttribute>::iterator,bool> RetAttInsert;
 	
 	//represente les fils autorisees sous forme de regex;
 	regex_t childs;
@@ -25,13 +25,13 @@ class DtdElement {
 	 
 	public :
 		DtdElement(std::string name);
-		bool addAttribute(std::string name);
+		bool addAttribute(std::string const & name);
 		
-		std::string getName();
+		std::string getName() const;
 		
 		//retourne l'élément sous forme de chaine.
-		std::string toString();
-		std::string attributeListToString();
+		std::string toString() const;
+		std::string attributeListToString() const;
 		
 		void completeChildPattern(std::string r);//TODO:c'est tout pour le moment
 		
@@ -41,11 +41,15 @@ class DtdElement {
 		//verifie si la liste de fils (sous forme de string séparé par des virgules)
 		//récupéré depuis un xml est conforme à la dtd. retourne vrai si valide.
 		//bool checkXMLChildren(std::string liste);
-}
+};
 
 //surcharge d'opérateur pour utilisation dans un set
 bool operator<(DtdElement const &a, DtdElement const& b);
+bool operator<=(DtdElement const &a, DtdElement const& b);
+bool operator>(DtdElement const &a, DtdElement const& b);
+bool operator>=(DtdElement const &a, DtdElement const& b);
 bool operator==(DtdElement const &a, DtdElement const& b);
+bool operator!=(DtdElement const &a, DtdElement const& b);
 
 
 #endif

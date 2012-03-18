@@ -12,10 +12,10 @@ DtdElement::DtdElement(string aname):name(aname)
 	
 }
 
-bool DtdElement::addAttribute(string name)
+bool DtdElement::addAttribute(string const & name)
 {
 	
-	RetType ret = attributs.insert(DtdAttribute(name));
+	DtdElement::RetAttInsert ret = attributs.insert(DtdAttribute(name));
 	
 	return ret.second;
 }
@@ -47,6 +47,28 @@ void DtdElement::completeChildPattern(string r)
 std::string DtdElement::getName()
 {
 	return name;
+}
+
+//Surcharges d'opérateur
+
+bool operator<=(DtdElement const &a, DtdElement const& b)
+{
+	return a.getName() <= b.getName();
+}
+
+bool operator>(DtdElement const &a, DtdElement const& b)
+{
+	return a.getName() > b.getName();
+}
+
+bool operator>=(DtdElement const &a, DtdElement const& b)
+{
+	return a.getName() >= b.getName();
+}
+
+bool operator!=(DtdElement const &a, DtdElement const& b)
+{
+	return a.getName() != b.getName();
 }
 
 bool operator<(DtdElement const &a, DtdElement const& b)

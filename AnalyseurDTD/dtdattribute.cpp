@@ -11,12 +11,12 @@ DtdAttribute::DtdAttribute(string aname, DtdElement * element):name(aname),paren
 }
 		
 //getter
-string DtdAttribute::getName()
+string DtdAttribute::getName() const
 {
 	return name;
 }
 
-string DtdAttribute::toString()
+string DtdAttribute::toString() const
 {
 	return name +" CDATA #IMPLIED";
 }

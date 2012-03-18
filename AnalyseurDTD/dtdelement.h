@@ -14,6 +14,7 @@ class DtdElement {
 	//remarque c'est un set d'attributs, dans le cadre 
 	//d'une evolutivité il faudrai remplacer ce string 
 	//par un objet de type attribut
+	//TODO: Réfléchir à l'utilisation d'un map au lieu d'un set...
 	std::set<DtdAttribute> attributs;
 	//for the return of an insert in the attribute list.
 	typedef std::pair<std::set<DtdAttribute>::iterator,bool> RetAttInsert;

@@ -15,23 +15,24 @@ DtdElement::DtdElement(string aname):name(aname)
 bool DtdElement::addAttribute(string const & name)
 {
 	
-	DtdElement::RetAttInsert ret = attributs.insert(DtdAttribute(name));
+	DtdElement::RetAttInsert ret = attributs.insert(DtdAttribute(name, this));
 	
 	return ret.second;
 }
 
-string DtdElement::toString()
+string DtdElement::toString() const
 {
 	string ret("<!ELEMENT ");
-	ret += name +" "+regexPattern+">"  
+	ret += name +" "+regexPattern+">" ;
 	return ret;
 }
 
-string DtdElement::attributeListToString()
+string DtdElement::attributeListToString() const
 {
 	string ret("<!ATTLIST ");
 	ret += name + " ";
-	for ( it=attributs.begin() ; it != attributs.end(); it++ )
+	set<DtdAttribute>::iterator it;
+	for ( it=attributs.begin() ; it != attributs.end(); ++it )
 	{
 		ret+="\n\t"+it->toString();
 	}
@@ -44,7 +45,7 @@ void DtdElement::completeChildPattern(string r)
 	regexPattern+=r;
 }
 
-std::string DtdElement::getName()
+std::string DtdElement::getName() const
 {
 	return name;
 }

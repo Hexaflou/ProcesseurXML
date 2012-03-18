@@ -4,7 +4,7 @@
 #include "dtdelement.h"
 
 #include <string>
-#include <set>
+#include <map>
 
 using namespace std;
 
@@ -16,32 +16,33 @@ DtdDoc::DtdDoc(std::string afilepath):filepath(afilepath)
 
 bool DtdDoc::addElement(DtdElement element)
 {
-	DtdDoc::RetElemInsert ret = elements.insert(element);
+	DtdDoc::RetElemInsert ret = elements.insert(
+					DtdDoc::MapElem(element.getName(),element) );
 	return ret.second;
 }
 
 
 bool DtdDoc::addAttributetoElement(std::string const &elementName, std::string const &attribut)
 {
-	set<DtdElement>::iterator elementPtr = elements.find(DtdElement(elementName));
+	map<string,DtdElement>::iterator elementPtr = elements.find(elementName);
 	if(elementPtr == elements.end())
 	{
 		return false;
 	}
 	else
 	{
-		return (elementPtr->addAttribute(attribut));
+		return (elementPtr->second.addAttribute(attribut));
 	}
 }
 
 string DtdDoc::toString() const
 {
 	string ret;
-	set<DtdElement>::iterator it;
+	map<string,DtdElement>::const_iterator it;
 	for ( it=elements.begin() ; it != elements.end(); ++it )
 	{
-		ret+=it->toString()+"\n";
-		ret+=it->attributeListToString()+"\n\n";
+		ret+=it->second.toString()+"\n";
+		ret+=it->second.attributeListToString()+"\n\n";
 	}
 	return ret;
 }

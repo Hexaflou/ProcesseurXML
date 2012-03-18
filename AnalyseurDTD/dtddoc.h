@@ -1,16 +1,17 @@
 #ifndef DTDDOC_H
 #define DTDDOC_H
 
-#include <set>
+#include <map>
 #include <string>
 #include "dtdelement.h"
 
 class DtdDoc {
 	
 	std::string filepath ;
-	std::set<DtdElement> elements ;
+	std::map<std::string,DtdElement> elements ;
 	//for the return of an insert in the attribute list.
-	typedef std::pair<std::set<DtdElement>::iterator,bool> RetElemInsert;
+	typedef std::pair<std::map<std::string,DtdElement>::iterator,bool> RetElemInsert;
+	typedef std::pair<std::string,DtdElement> MapElem;
 		
 	public :
 		DtdDoc(std::string filepath);

@@ -10,10 +10,12 @@ class Cdata : public XmlElement{
 	std::string content;
 	
 	public :
-	Cdata(string content, XmlNode * parent);
+	Cdata(std::string content, XmlNode * parent=0);
 	
 	//Getters
-	virtual string toString();
+	virtual std::string toString(int level=0) const;
+	
+	virtual ~Cdata();
 }
 
 #endif

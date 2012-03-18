@@ -1,12 +1,13 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
-#include <xmlnode.h>
-#include <doctype.h>
+#include <string>
+
+#include "xmlnode.h"
+#include "doctype.h"
 
 class Document
 {
-	
 	Doctype doctype;
 	XmlNode root;
 	std::string filepath;

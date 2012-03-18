@@ -12,7 +12,10 @@ class XmlElement {
 	public :
 		XmlElement(XmlNode * parent = 0);
 		
-		virtual std::string toString()=0;
+		virtual std::string toString(int level=0) const=0;
+		virtual std::string setParent(XmlNode * newParent);
+		
+		virtual ~XmlElement();
 }
 
 #endif

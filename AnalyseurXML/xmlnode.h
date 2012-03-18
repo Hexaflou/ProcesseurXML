@@ -2,22 +2,24 @@
 #define XMLNODE_H
 
 #include <string>
+#include <list>
 
 #include "xmlelement.h"
 #include "commun.h"
 
-typedef list<XmlElement*> ElementList;
 
 class XmlNode : public XmlElement {
 	ElementName name;
 	AttMap attributs;
 	ElementList childs;
 	
-	
+	typedef std::list<XmlElement*> ElementList;
+	//TODO  : remove if useless
+	//typedef std::list<XmlElement*>::iterator ElemListIt;
 	
 	public :
 		//Constructeurs
-		XmlNode(ElementName name, AttMap attributs, ElementList fils, XmlNode * parent=0);
+		XmlNode(ElementName name, AttMap attributs, XmlNode::ElementList childs, XmlNode * parent=0);
 		XmlNode(ElementName name, XmlNode * parent=0);
 		XmlNode(std::string ns, std::string name, XmlNode * parent=0);
 		
@@ -30,7 +32,10 @@ class XmlNode : public XmlElement {
 		void addChild(XmlElement * element);
 		
 		//Getters
-		virtual std::string toString();
+		virtual std::string toString(int level=0) const;
+		
+		//destructeur
+		virtual ~XmlNode();
 		
 }
 

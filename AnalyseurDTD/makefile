@@ -20,5 +20,5 @@ analyseDTD: *.l *.y $(OBJS)
 	$(EDL) $(LDFLAGS) -o $(EXE) lex.$(DTDPREFIX).c  $(DTDPREFIX).tab.c $(OBJS) $(LIBS)
 
 clean:
-	-rm -rf *.tab.c lex.*.c *.tab.h *.output $(OBJS) analyseDTD
+	-rm -rf *.tab.c lex.*.c *.tab.h *.output $(OBJS) $(EXE)
 

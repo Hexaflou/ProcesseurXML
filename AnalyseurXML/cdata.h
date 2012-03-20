@@ -16,6 +16,6 @@ class Cdata : public XmlElement{
 	virtual std::string toString(int level=0) const;
 	
 	virtual ~Cdata();
-}
+};
 
 #endif

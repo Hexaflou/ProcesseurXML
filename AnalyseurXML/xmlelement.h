@@ -13,9 +13,13 @@ class XmlElement {
 		XmlElement(XmlNode * parent = 0);
 		
 		virtual std::string toString(int level=0) const=0;
-		virtual std::string setParent(XmlNode * newParent);
+		virtual void setParent(XmlNode * newParent);
+		
+		XmlNode * getParent();
 		
 		virtual ~XmlElement();
-}
+};
 
 #endif
+
+

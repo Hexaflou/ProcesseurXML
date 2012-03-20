@@ -2,24 +2,25 @@
 #include <list>
 
 #include "xmlelement.h"
+#include "xmlnode.h"
 #include "commun.h"
 
 using namespace std;
 
 //Constructeurs
-XmlNode::XmlNode(ElementName aname, AttMap aattributs, XmlNode::ElementList achilds, XmlNode * parent=0):
+XmlNode::XmlNode(ElementName aname, AttMap aattributs, XmlNode::ElementList achilds, XmlNode * parent):
 XmlElement(parent), name(aname), attributs(aattributs), childs(achilds)
 {
 	
 }
 
-XmlNode::XmlNode(ElementName aname, XmlNode * parent=0):
+XmlNode::XmlNode(ElementName aname, XmlNode * parent):
 XmlElement(parent), name(aname), attributs(), childs()
 {
 	
 }
 
-XmlNode::XmlNode(string ns, string aname, XmlNode * parent=0)
+XmlNode::XmlNode(string ns, string aname, XmlNode * parent):
 XmlElement(parent), name(ns,aname), attributs(), childs()
 {
 	
@@ -29,18 +30,19 @@ XmlElement(parent), name(ns,aname), attributs(), childs()
 //Ajoute un attribut au noeud, retourne vrai si succes et faux si l'attribut existe déjà.
 bool XmlNode::addAttribute(Attribut att)
 {
-	attributs.insert(att);
+	pair<AttMap::iterator,bool> ret(attributs.insert(att));
+	return ret.second;
 }
 
 bool XmlNode::addAttribute(string name, string content)
 {
-	attributs.insert(Attribut(name,content));
+	return addAttribute(Attribut(name,content));
 }
 
 //Ajoute un fils au noeud.
 void XmlNode::addChild(XmlElement * element)
 {
-	childs.insert(element);
+	childs.push_back(element);
 }
 
 
@@ -51,28 +53,34 @@ string XmlNode::toString(int level) const
 	for(i = 0; i<level; ++i)
 		ret+="\t";
 	
-	ret+="<"+name+" ";
+	if(name.first=="")
+		ret+="<"+name.second+" ";
+	else
+		ret+="<"+name.first+":"+name.second+" ";
 	
-	AttMap::iterator ait;
+	AttMap::const_iterator ait;
 	for(ait = attributs.begin() ; ait != attributs.end() ; ++ait)
 	{
-		ret+=ait->first()+"=\""+ait->second()+"\" ";
+		ret+=ait->first+"=\""+ait->second+"\" ";
 	}
 	
 	if(childs.size()>0)
 	{
 		ret+=">";
-		ElementList::iterator eit;
+		ElementList::const_iterator eit;
 		for(eit = childs.begin(); eit != childs.end(); ++eit)
 		{
-			ret+=eit->toString(level+1);
+			ret+=(**eit).toString(level+1);
 		}
 		ret+="\n";
 		
 		for(i = 0; i<level; ++i)
 			ret+="\t";
 		
-		ret+="</"+name+">";
+		if(name.first=="")
+			ret+="</"+name.second+">";
+		else
+			ret+="</"+name.first+":"+name.second+">";
 	}
 	else
 	{

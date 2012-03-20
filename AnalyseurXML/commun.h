@@ -1,15 +1,15 @@
 #ifndef COMMUN_H
 #define COMMUN_H
 
-using namespace std;
 #include <list>
 #include <map>
 #include <utility>
 #include <string>
 
-typedef pair<string,string> Attribut;
-typedef map<string,string> AttMap;
-typedef pair<string,string> ElementName;
+typedef std::pair<std::string,std::string> Attribut;
+typedef std::map<std::string,std::string> AttMap;
+typedef std::map<std::string,std::string>::iterator AttMapIt;
+typedef std::pair<std::string,std::string> ElementName;
 
 #ifdef DEBUG
 #define debug(x) (x)

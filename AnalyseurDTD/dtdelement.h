@@ -21,7 +21,7 @@ class DtdElement {
 	
 	//represente les fils autorisees sous forme de regex;
 	regex_t childs;
-	//directement tiree du fichier le patern regex
+	//directement tiree du fichier le pattern regex
 	std::string regexPattern;
 	 
 	public :

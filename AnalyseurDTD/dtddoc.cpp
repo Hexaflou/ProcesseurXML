@@ -5,8 +5,12 @@
 
 #include <string>
 #include <map>
+#include <iostream>
+#include <cstdio>
 
 using namespace std;
+int xylodtdparse(DtdDoc *);
+extern FILE * xylodtdin;
 
 DtdDoc::DtdDoc(std::string afilepath):filepath(afilepath)
 {
@@ -44,5 +48,20 @@ string DtdDoc::toString() const
 		ret+=it->second.toString()+"\n";
 		ret+=it->second.attributeListToString()+"\n\n";
 	}
+	return ret;
+}
+
+bool DtdDoc::parse()
+{
+	FILE * fid;
+	fid = fopen(filepath.c_str(),"r");
+	if(!fid)
+	{
+		cerr << "Dtd file " << filepath << " can't be read." << endl;
+		return false;
+	}
+	xylodtdin = fid;
+	bool ret = (xylodtdparse(this) == 0);
+	fclose(fid);
 	return ret;
 }

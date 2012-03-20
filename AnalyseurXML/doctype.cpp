@@ -30,3 +30,8 @@ string Doctype::toString()
 	
 	return ret;
 }
+
+bool Doctype::parse()
+{
+
+}

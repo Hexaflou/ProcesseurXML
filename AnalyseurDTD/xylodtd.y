@@ -1,6 +1,7 @@
 %{
 
 #include "commun.h"
+#include <iostream>
 
 
 void yyerror(DtdDoc *d, char *msg);
@@ -33,13 +34,21 @@ main
 
 
 dtd_list_opt
-: dtd_list_opt dtd_declaration CLOSE	{d->addElement(*$2);}
+	: dtd_list_opt dtd_declaration CLOSE	{ if($2 != 0) d->addElement(*$2);}
 | /* empty */		
 ;
 
 dtd_declaration
-: ELEMENT IDENT list	{$$ = new DtdElement($2); $$->completeChildPattern(*$3);}
-| ATTLIST IDENT att_definition_opt {for(int i = 0; i < $3->size(); i++) { d->addAttributetoElement($2,(*$3)[i]);}}
+: ELEMENT IDENT list	{
+	$$ = new DtdElement($2); 
+	$$->completeChildPattern(*$3);
+  }
+| ATTLIST IDENT att_definition_opt {
+	for(int i = 0; i < $3->size(); i++) { 
+		d->addAttributetoElement($2, (*$3)[i]);
+	}
+	$$ = 0;
+  }
 ;
 
 list
@@ -114,10 +123,12 @@ int main(int argc, char **argv)
   int err;
 
   yydebug = 1; // pour désactiver l'affichage de l'exécution du parser LALR, commenter cette ligne
-  DtdDoc *doc = new DtdDoc("nowhere");
-  err = yyparse(doc);
+  DtdDoc *doc = new DtdDoc("rap2.dtd");
+  doc->parse();
+  std::cout << doc->toString();
+  /*err = yyparse(doc);
   if (err != 0) printf("Parse ended with %d error(s)\n", err);
-        else  printf("Parse ended with success\n", err);
+        else  printf("Parse ended with success\n", err);*/
   return 0;
 }
 int yywrap(void)

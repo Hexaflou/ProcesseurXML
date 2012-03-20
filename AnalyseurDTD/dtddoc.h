@@ -24,6 +24,8 @@ class DtdDoc {
 		bool addAttributetoElement(std::string const &elementName, std::string const &attribut);
 		
 		std::string toString() const;
+		
+		bool parse();
 	
 };
 

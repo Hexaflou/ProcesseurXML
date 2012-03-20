@@ -29,6 +29,8 @@ string DtdElement::toString() const
 
 string DtdElement::attributeListToString() const
 {
+	if(attributs.size()==0)
+		return string("");
 	string ret("<!ATTLIST ");
 	ret += name + " ";
 	set<DtdAttribute>::iterator it;
@@ -38,6 +40,7 @@ string DtdElement::attributeListToString() const
 	}
 	ret+=">";
 	return ret;
+	
 }
 
 void DtdElement::completeChildPattern(string r)

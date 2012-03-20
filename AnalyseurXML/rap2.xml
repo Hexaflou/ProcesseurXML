@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="rap2.xsl"?>
+
 <!DOCTYPE rapport SYSTEM "rap3.dtd">
 <rapport>
  <titre>Realiser un compilateur</titre>

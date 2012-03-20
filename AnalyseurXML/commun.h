@@ -5,6 +5,7 @@
 #include <map>
 #include <utility>
 #include <string>
+#include <vector>
 
 typedef std::pair<std::string,std::string> Attribut;
 typedef std::map<std::string,std::string> AttMap;

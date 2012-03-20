@@ -1,9 +1,12 @@
 %option 8bit 
 
 %{
+#include "commun.h"
 #include <ctype.h>
 #include "xylodtd.tab.h"
-#include "commun.h"
+
+
+
 
 static char* skipSpace(char *s) {
   char *buf;
@@ -88,7 +91,7 @@ any "ANY"
 <INSIDE>{plus}                { return PLUS ; }
 <INSIDE>{empty}               { return EMPTY; }
 <INSIDE>{any}                 { return ANY; }
-<INSIDE>{pcdata}              { return PCDATA; }
+<INSIDE>{pcdata}              { stringreturn(PCDATA); }
 <INSIDE>{cdata}               { return CDATA; }
 <INSIDE>{string}              { stringreturn(STRING); }
 <INSIDE>{tokentype}{ws}?      { stringreturn(TOKENTYPE); }

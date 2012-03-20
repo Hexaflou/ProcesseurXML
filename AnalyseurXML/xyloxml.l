@@ -5,6 +5,12 @@
 #include "commun.h"
 #include "xyloxml.tab.h"
 
+#include "xmlnode.h"
+#include "xmlelement.h"
+#include "doctype.h"
+#include "document.h"
+#include "cdata.h"
+
 static char* skipSpace(char *s) {
   char *buf;
   int i,lastnonspace;

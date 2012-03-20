@@ -59,8 +59,8 @@ seq_list
 ;
 cp
 : IDENT card_opt	{$$ = new string($1 + *$2);}
-| enumerate card_opt	{$$ = new string(*$1 + *$2);} 
-| seq card_opt		{$$ = new string(*$1 + *$2);}
+| enumerate	{$$ = new string(*$1);} 
+| seq		{$$ = new string(*$1);}
 ;
 
 /* GENERAL */
@@ -100,10 +100,10 @@ enum_list_plus
 enum_list
 : enum_list PIPE item_enum	{$$ = new string(*$1 + "|" + *$3);}
 | item_enum			{$$ = new string(*$1);}
-| PCDATA	{$$ = new string($1);}
 ;
 item_enum
 : IDENT		{$$ = new string($1);}
+| PCDATA  {$$ = new string($1);}
 ;
 
 

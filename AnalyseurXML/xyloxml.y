@@ -1,6 +1,11 @@
 %{
 
 #include "commun.h"
+#include "xmlnode.h"
+#include "xmlelement.h"
+#include "doctype.h"
+#include "document.h"
+#include "cdata.h"
 
 int yywrap(void);
 void yyerror(char *msg);
@@ -14,8 +19,11 @@ int yylex(void);
 %union {
    char * s;
    ElementName * en;  /* le nom d'un element avec son namespace */
-   string * s;
    XmlNode * xmln;
+   vector<XmlElement> * vxmle;
+   AttMap * am;
+   Attribut * att;
+   Doctype * dt;
 }
 
 %token EQ SLASH CLOSE CLOSESPECIAL DOCTYPE
@@ -23,7 +31,10 @@ int yylex(void);
 %token <en> NSSTART START STARTSPECIAL END NSEND
 %type <en> start
 %type <xmln> xml_element
-
+%type <vxmle> empty_or_content close_content_and_end content_opt
+%type <att> attribute
+%type <am> attributes_opt
+%type <dt> dec_doctype
 
 %%
 
@@ -54,20 +65,20 @@ dec_header
  ;
 
 dec_doctype /* Doctype */
- : DOCTYPE IDENT IDENT STRING CLOSE 	{ $$= new Doctype($1,$2,$3); }
+ : DOCTYPE IDENT IDENT STRING CLOSE 	{ $$= new Doctype($2,$3,$4); }
  ;
 
 xml_element /* XmlNode */
  : start attributes_opt empty_or_content { $$ = new XmlNode($1, $2, $3);} /* parent ? */
  ;
 
-attributes_opt /* map<string,string> */
+attributes_opt /* AttMap */
  : attributes_opt attribute		{$$ = $1; (*$1)[$2->first]=$2->second;}
- | /* empty */				{$$ = new map<string,string>();}
+ | /* empty */				{$$ = new AttMap();}
  ;
 
-attribute /* pair<string,string> */
- : IDENT EQ STRING			{$$ = new pair<string,string>($1,$3);}
+attribute /* Attribut */
+ : IDENT EQ STRING			{$$ = new Attribut($1,$3);}
  ;
 
 start /* ElementName */

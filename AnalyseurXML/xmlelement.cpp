@@ -20,3 +20,7 @@ XmlElement::~XmlElement()
 	
 }
 
+XmlNode * XmlElement::getParent()
+{
+	return parent;
+}

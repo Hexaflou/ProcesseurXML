@@ -31,7 +31,11 @@ bool DtdDoc::addAttributetoElement(std::string const &elementName, std::string c
 	map<string,DtdElement>::iterator elementPtr = elements.find(elementName);
 	if(elementPtr == elements.end())
 	{
-		return false;
+		DtdElement elem(elementName);
+		elem.addAttribute(attribut);
+		elements.insert(
+				DtdDoc::MapElem(elementName,elem) );
+		return true;
 	}
 	else
 	{

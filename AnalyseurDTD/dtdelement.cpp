@@ -22,9 +22,16 @@ bool DtdElement::addAttribute(string const & name)
 
 string DtdElement::toString() const
 {
-	string ret("<!ELEMENT ");
-	ret += name +" "+regexPattern+">" ;
-	return ret;
+	if(regexPattern!="")
+	{
+		string ret("<!ELEMENT ");
+		ret += name +" "+regexPattern+">" ;
+		return ret;
+	}
+	else
+	{
+		return string();
+	}
 }
 
 string DtdElement::attributeListToString() const

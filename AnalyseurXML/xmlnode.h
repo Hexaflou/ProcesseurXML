@@ -10,18 +10,13 @@
 
 class XmlNode : public XmlElement {
 	
-	typedef std::list<XmlElement*> ElementList;
-	typedef std::list<XmlElement*>::iterator ElemListIt;
-	
 	ElementName name;
 	AttMap attributs;
 	ElementList childs;
 	
-	
-	
 	public :
 		//Constructeurs
-		XmlNode(ElementName name, AttMap attributs, XmlNode::ElementList childs, XmlNode * parent=0);
+		XmlNode(ElementName name, AttMap attributs, ElementList childs, XmlNode * parent=0);
 		XmlNode(ElementName name, XmlNode * parent=0);
 		XmlNode(std::string ns="", std::string name="", XmlNode * parent=0);
 		
@@ -32,9 +27,14 @@ class XmlNode : public XmlElement {
 		
 		//Ajoute un fils au noeud.
 		void addChild(XmlElement * element);
+
+		ElementName getName();
 		
 		//Getters
 		virtual std::string toString(int level=0) const;
+
+		ElementList getDirectChildren();
+		std::string getDirectChildrenNames();
 		
 		//destructeur
 		virtual ~XmlNode();

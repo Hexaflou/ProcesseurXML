@@ -45,14 +45,19 @@ bool DtdDoc::addAttributetoElement(std::string const &elementName, std::string c
 
 string DtdDoc::toString() const
 {
-	string ret;
+	string repr;
+
 	map<string,DtdElement>::const_iterator it;
 	for ( it=elements.begin() ; it != elements.end(); ++it )
 	{
-		ret+=it->second.toString()+"\n";
-		ret+=it->second.attributeListToString()+"\n\n";
+		repr += it->second.toString() + "\n";
+
+		string reprAttrList(it->second.attributeListToString());
+		if(reprAttrList.size()) {
+			repr += it->second.attributeListToString() + "\n\n";
+		}
 	}
-	return ret;
+	return repr;
 }
 
 bool DtdDoc::parse()
@@ -61,7 +66,7 @@ bool DtdDoc::parse()
 	fid = fopen(filepath.c_str(),"r");
 	if(!fid)
 	{
-		cerr << "Dtd file " << filepath << " can't be read." << endl;
+		cerr << "E: Dtd file " << filepath << " can't be read." << endl;
 		return false;
 	}
 	xylodtdin = fid;

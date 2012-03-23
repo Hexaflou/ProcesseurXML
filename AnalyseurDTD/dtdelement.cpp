@@ -22,10 +22,10 @@ bool DtdElement::addAttribute(string const & name)
 
 string DtdElement::toString() const
 {
-	if(regexPattern!="")
+	if(regexPattern != "")
 	{
 		string ret("<!ELEMENT ");
-		ret += name +" "+regexPattern+">" ;
+		ret += name + " " + regexPattern + ">";
 		return ret;
 	}
 	else
@@ -36,23 +36,27 @@ string DtdElement::toString() const
 
 string DtdElement::attributeListToString() const
 {
-	if(attributs.size()==0)
+	if(attributs.size() == 0)
 		return string("");
+
 	string ret("<!ATTLIST ");
-	ret += name + " ";
+	ret += name;
+
 	set<DtdAttribute>::iterator it;
 	for ( it=attributs.begin() ; it != attributs.end(); ++it )
 	{
-		ret+="\n\t"+it->toString();
+		ret += "\n\t" + it->toString();
 	}
-	ret+=">";
+
+	ret += ">";
+
 	return ret;
 	
 }
 
 void DtdElement::completeChildPattern(string r)
 {
-	regexPattern+=r;
+	regexPattern += r;
 }
 
 std::string DtdElement::getName() const

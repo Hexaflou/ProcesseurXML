@@ -14,15 +14,15 @@ Document::Document(std::string & afilepath, Doctype & adoctype, XmlNode & aroot)
 }
 
 Document::Document(std::string & afilepath):
-		doctype(),root(),filepath(filepath)
+		doctype(),root(),filepath(afilepath)
 {
 	
 }
 
-//la racine ne doit pas avoir de parent;
+// La racine ne doit pas avoir de parent;
 bool Document::setRoot(XmlNode & newRoot)
 {
-	if(newRoot.getParent()!=0)
+	if(newRoot.getParent() == 0)
 	{
 		root = newRoot;
 		return true;
@@ -47,8 +47,8 @@ void Document::setDoctype(Doctype & newDoctype)
 string Document::toString()
 {
 	string ret("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-	ret+=doctype.toString()+"\n";
-	ret+=root.toString(0);
+	ret += doctype.toString() + "\n";
+	ret += root.toString(0);
 	
 	return ret;
 }

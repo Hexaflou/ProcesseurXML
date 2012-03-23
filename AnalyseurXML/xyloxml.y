@@ -68,7 +68,7 @@ dec_doctype /* Doctype */
  ;
 
 xml_element /* XmlNode */
- : start attributes_opt empty_or_content { $$ = new XmlNode(*$1, *$2, *$3);} /* parent ? */
+ : start attributes_opt empty_or_content { $$ = new XmlNode(*$1, *$2, *$3); } /* parent ? */
  ;
 
 attributes_opt /* AttMap */
@@ -86,10 +86,10 @@ start /* ElementName */
  ;
 empty_or_content /* vector<XmlElement> */
  : SLASH CLOSE				{ $$ = new std::list<XmlElement *>(); }
- | close_content_and_end CLOSE		{$$=$1;}
+ | close_content_and_end CLOSE		{ $$=$1; }
  ;
 close_content_and_end /* vector<XmlElement> */
- : CLOSE	content_opt END 	{$$=$2;}
+ : CLOSE	content_opt END 	{ $$=$2; }
  ;
 content_opt /* vector<XmlElement> */
  : content_opt DATA			{ $$ = $1; $$->push_back(new Cdata($2)); }
@@ -104,11 +104,17 @@ int main(int argc, char **argv)
   int err;
   std::string filepath = "blablabla.bla";
 
-  yydebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
+  //yydebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
   Document *doc = new Document(filepath);
   err = yyparse(doc);
-  if (err != 0) printf("Parse ended with %d error(s)\n", err);
-  	else  printf("Parse ended with success\n", err);
+
+  if (err != 0){
+    printf("E: Parsing ended with %d error(s).\n", err);
+  }else{
+  	printf("\nParsed successfully.\n\n", err);
+    printf(doc->toString().c_str());
+    printf("\n");
+  }
   return 0;
 }
 int yywrap(void)

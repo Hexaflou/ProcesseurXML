@@ -18,7 +18,7 @@ string DtdAttribute::getName() const
 
 string DtdAttribute::toString() const
 {
-	return name +" CDATA #IMPLIED";
+	return name + " CDATA #IMPLIED";
 }
 
 //Surcharges d'opérateur

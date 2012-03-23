@@ -60,6 +60,11 @@ string DtdDoc::toString() const
 	return repr;
 }
 
+string DtdDoc::getFilePath() const
+{
+	return filepath;
+}
+
 bool DtdDoc::parse()
 {
 	FILE * fid;

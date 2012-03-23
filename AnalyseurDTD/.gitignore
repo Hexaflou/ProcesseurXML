@@ -1,1 +1,4 @@
 analyseDTD
+lex.*.c
+*.tab.c
+

@@ -25,6 +25,8 @@ class DtdDoc {
 		
 		std::string toString() const;
 		
+		std::string getFilePath() const;
+		
 		bool parse();
 	
 };

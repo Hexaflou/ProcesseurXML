@@ -4,10 +4,7 @@
 using namespace std;
 
 Doctype::Doctype (string arootName, bool aisPublic, string adtdUrl):
-		rootName(arootName),isPublic(aisPublic),dtdUrl(adtdUrl)
-{
-	
-}
+		rootName(arootName),isPublic(aisPublic),dtdUrl(adtdUrl){}
 
 Doctype::Doctype (string arootName, string sportee, string adtdUrl):
 		rootName(arootName),isPublic(false),dtdUrl(adtdUrl)

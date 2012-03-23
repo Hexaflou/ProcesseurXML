@@ -8,16 +8,10 @@
 using namespace std;
 
 Document::Document(std::string & afilepath, Doctype & adoctype, XmlNode & aroot):
-		doctype(adoctype),root(aroot),filepath(afilepath)
-{
-
-}
+		doctype(adoctype),root(aroot),filepath(afilepath){}
 
 Document::Document(std::string & afilepath):
-		doctype(),root(),filepath(afilepath)
-{
-	
-}
+		doctype(),root(),filepath(afilepath){}
 
 // La racine ne doit pas avoir de parent;
 bool Document::setRoot(XmlNode & newRoot)

@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output method="html"/>
+<xsl:output method="html"/>
   
   <!-- Template pour la racine -->
 	<xsl:template match="rapport">
-		<html>
-			<head>
-				<title>
-				  <xsl:value-of select="titre" />
-				</title>
-				<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-			</head>
-			<body bgColor="white">
-
-			<xsl:apply-templates select="titre" />
-
-			<h2>
-				Auteur<xsl:if test="count(auteur)&gt;1">s</xsl:if>
-			</h2>
-			<ul>
-				<xsl:apply-templates select="auteur" />
-			</ul>			
-
-			<xsl:apply-templates select="chapitre" />
-
+		<html>		
+			<body>
+			<xsl:apply-templates />
 			</body>
 		</html>
 	</xsl:template>
@@ -37,7 +20,11 @@
 	</xsl:template>
 
 	<!-- Template pour les auteurs -->
-	<xsl:template match="auteur">		
+	<xsl:template match="auteur">
+
+			<h2>
+				Auteur
+			</h2>
 		<li>
 			<xsl:value-of select="nom" /><xsl:text> </xsl:text><xsl:value-of select="prenom" />
 		</li>			
@@ -58,11 +45,6 @@
 			<xsl:value-of select="@titre" />
 		</h2>
 		</xsl:if>			
-		<xsl:apply-templates />
-	</xsl:template>
-
-	<!-- Template pour les sections -->
-	<xsl:template match="section">
 		<xsl:apply-templates />
 	</xsl:template>
 

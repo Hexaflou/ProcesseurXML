@@ -13,11 +13,17 @@ all: analyseDTD
 
 %.o : %.cpp
 	$(CC) $(CCFLAGS) -o $@ -c $<
-
-analyseDTD: *.l *.y $(OBJS)
+	
+bison : $(DTDPREFIX).l $(DTDPREFIX).y
 	flex -P$(DTDPREFIX) $(DTDPREFIX).l
 	bison -p$(DTDPREFIX) --debug --verbose --defines=$(DTDPREFIX).tab.h $(DTDPREFIX).y
-	$(EDL) $(LDFLAGS) -o $(EXE) lex.$(DTDPREFIX).c  $(DTDPREFIX).tab.c $(OBJS) $(LIBS)
+	
+objs : bison $(OBJS)
+	$(CC) $(CCFLAGS) -o lex.$(DTDPREFIX).o -c lex.$(DTDPREFIX).c
+	$(CC) $(CCFLAGS) -o $(DTDPREFIX).tab.o -c $(DTDPREFIX).tab.c
+
+analyseDTD: objs
+	$(EDL) $(LDFLAGS) -o $(EXE) lex.$(DTDPREFIX).o  $(DTDPREFIX).tab.o $(OBJS) $(LIBS)
 
 clean:
 	-rm -rf *.tab.c lex.*.c *.tab.h *.output $(OBJS) $(EXE)

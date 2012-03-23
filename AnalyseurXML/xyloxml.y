@@ -7,9 +7,9 @@
 #include "document.h"
 #include "cdata.h"
 
-int yywrap(void);
-void yyerror(Document *d,char *msg);
-int yylex(void);
+void xyloxmlerror(Document *d, char *msg);
+static int yywrap(void);
+int xyloxmllex(void);
 
 %}
 
@@ -99,31 +99,8 @@ content_opt /* vector<XmlElement> */
  ;
 %%
 
-int main(int argc, char **argv)
-{
-  int err;
-  std::string filepath = "blablabla.bla";
 
-  //yydebug = 1; // pour enlever l'affichage de l'éxécution du parser, commenter cette ligne
-  Document *doc = new Document(filepath);
-  err = yyparse(doc);
-
-  if (err != 0){
-    printf("E: Parsing ended with %d error(s).\n", err);
-  }else{
-  	printf("\nParsed successfully.\n\n", err);
-    printf(doc->toString().c_str());
-    printf("\n");
-  }
-  return 0;
-}
 int yywrap(void)
 {
-  return 1;
+	return 1;
 }
-
-void yyerror(Document * d,char *msg)
-{
-  fprintf(stderr, "%s\n", msg);
-}
-

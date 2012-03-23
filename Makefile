@@ -1,23 +1,22 @@
 CC = g++
 CFLAGS = -Wall
+EDL	= g++
+LDFLAGS	= -g -DDYDEBUG=1
 EXEC_NAME = Xylo
 INCLUDES =
 LIBS =
-OBJ_FILES = $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.c,%.o,$(wildcard AnalyseurXML/*.c))
 
 all : $(EXEC_NAME)
 
 clean :
-	rm $(EXEC_NAME) $(OBJ_FILES)
+	cd AnalyseurXML; make clean
+	cd AnalyseurDTD ; make clean
+	rm -f $(EXEC_NAME)
 
-$(EXEC_NAME) : $(OBJ_FILES)
-	$(CC) -o $(EXEC_NAME) $(OBJ_FILES) $(LIBS)
-
-%.o: %.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
-
-%.o: %.cc
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
-
-%.o: %.c
-	gcc $(CFLAGS) $(INCLUDES) -o $@ -c $<
+objs : 
+	cd AnalyseurXML; make objs
+	cd AnalyseurDTD; make objs
+	$(CC) -o main.o -c main.cpp $(CFLAGS)
+	
+$(EXEC_NAME) : objs
+	$(EDL) -o $(EXEC_NAME) $(wildcard AnalyseurXML/*.o) $(wildcard AnalyseurDTD/*.o) main.o $(LIBS)

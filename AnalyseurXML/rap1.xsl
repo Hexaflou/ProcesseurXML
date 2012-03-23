@@ -30,7 +30,7 @@
 	</xsl:template>
 
 	<!-- Template pour le titre -->
-	<xsl:template match="titre">		
+	<xsl:template match="titre">
 		<h1>
 			<xsl:value-of select="." />
 		</h1>			
@@ -63,12 +63,14 @@
 
 	<!-- Template pour les sections -->
 	<xsl:template match="section">
-		<xsl:if test="./@titre">
-		<h2>
-			<xsl:value-of select="@titre" />
-		</h2>
-		</xsl:if>			
 		<xsl:apply-templates />
+	</xsl:template>
+
+	<!-- Template pour les titres de section -->
+	<xsl:template match="section/titre">
+		<h2>
+			<xsl:value-of select="." />
+		</h2>
 	</xsl:template>
 
 </xsl:stylesheet>

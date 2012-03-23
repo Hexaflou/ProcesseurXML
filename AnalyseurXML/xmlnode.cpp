@@ -8,7 +8,7 @@
 using namespace std;
 
 //Constructeurs
-XmlNode::XmlNode(ElementName aname, AttMap aattributs, XmlNode::ElementList achilds, XmlNode * parent):
+XmlNode::XmlNode(ElementName aname, AttMap aattributs, ElementList achilds, XmlNode * parent):
 XmlElement(parent), name(aname), attributs(aattributs), childs(achilds)
 {
 	// Pour des raisons pratiques, on s'assure que les fils aie le bon parent
@@ -112,6 +112,45 @@ string XmlNode::toString(int level) const
 	}
 	
 	return repr;
+}
+
+ElementName XmlNode::getName() {
+	return name;
+}
+
+ElementList XmlNode::getDirectChildren() {
+	ElementList childlist;
+
+	// Pour chaque fils...
+	ElementList::const_iterator eit;
+	for(eit = childs.begin(); eit != childs.end(); ++eit)
+	{
+		childlist.push_back(*eit);
+	}
+
+	return childlist;
+}
+
+string XmlNode::getDirectChildrenNames() {
+	string namelist;
+
+	// Pour chaque fils...
+	ElementList::const_iterator eit;
+	for(eit = childs.begin(); eit != childs.end(); ++eit)
+	{
+		// On obtient un enfant
+		XmlNode * xmln = (dynamic_cast<XmlNode *>(*eit));
+		
+		// Est-ce bien un node ?
+		if(xmln != 0){
+			namelist += xmln->getName().second + " ";
+		}
+	}
+
+	if(namelist.size() > 0)
+		namelist.resize(namelist.size() - 1); // Removing the last space
+
+	return namelist;
 }
 
 XmlNode::~XmlNode()

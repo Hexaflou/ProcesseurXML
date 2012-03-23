@@ -20,6 +20,8 @@ class XmlElement {
 		virtual ~XmlElement();
 };
 
+typedef std::list<XmlElement*> ElementList;
+
 #endif
 
 

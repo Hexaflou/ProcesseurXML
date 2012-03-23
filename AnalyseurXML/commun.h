@@ -11,6 +11,7 @@ typedef std::pair<std::string,std::string> Attribut;
 typedef std::map<std::string,std::string> AttMap;
 typedef std::map<std::string,std::string>::iterator AttMapIt;
 typedef std::pair<std::string,std::string> ElementName;
+typedef std::map<ElementName, *xmlnode> XslMap;
 
 #ifdef DEBUG
 #define debug(x) (x)

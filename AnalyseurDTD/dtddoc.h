@@ -8,9 +8,11 @@
 class DtdDoc {
 	
 	std::string filepath ;
-	std::map<std::string,DtdElement> elements ;
+	
+	typedef std::map<std::string,DtdElement> ElemMap;
+	ElemMap elements ;
 	//for the return of an insert in the attribute list.
-	typedef std::pair<std::map<std::string,DtdElement>::iterator,bool> RetElemInsert;
+	typedef std::pair<ElemMap::iterator,bool> RetElemInsert;
 	typedef std::pair<std::string,DtdElement> MapElem;
 		
 	public :
@@ -22,6 +24,10 @@ class DtdDoc {
 		// attribut existe déjà
 		// element inexistant
 		bool addAttributetoElement(std::string const &elementName, std::string const &attribut);
+		
+		//validateurs
+		bool validate(std::string nodeName, AttMap attributs) const;
+		bool validate(std::string parentName, std::string childrenNames) const;
 		
 		std::string toString() const;
 		

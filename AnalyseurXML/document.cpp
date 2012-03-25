@@ -4,6 +4,7 @@
 #include "xmlnode.h"
 #include "doctype.h"
 #include "document.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 using namespace std;
 
@@ -36,6 +37,27 @@ XmlNode * Document::getRoot()
 void Document::setDoctype(Doctype & newDoctype)
 {
 	doctype = newDoctype;
+}
+
+bool Document::isValid()
+{
+	//vérification du nom de la racine.
+	if(root.getName().second != doctype.getRootName())
+	{
+		cout << "The name root is not conform to doctype declaration" << endl;
+		cout << "The document is not valid" << endl;
+		return false;
+	}
+	else if (!root.isValid(doctype.getDtd()))
+	{
+		cout << "The document is not valid" << endl;
+		return false;
+	}
+	else
+	{
+		cout << "The XML document is valid." << endl;
+	}
+	return true;
 }
 
 string Document::toString()

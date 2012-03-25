@@ -4,29 +4,30 @@
 #include "xmlelement.h"
 #include "xmlnode.h"
 #include "commun.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 using namespace std;
 
 //Constructeurs
 XmlNode::XmlNode(ElementName aname, AttMap aattributs, ElementList achilds, XmlNode * parent):
-XmlElement(parent), name(aname), attributs(aattributs), childs(achilds)
+XmlElement(parent), name(aname), attributs(aattributs), children(achilds)
 {
 	// Pour des raisons pratiques, on s'assure que les fils aie le bon parent
 	ElementList::const_iterator eit;
-	for(eit = childs.begin(); eit != childs.end(); ++eit)
+	for(eit = children.begin(); eit != children.end(); ++eit)
 	{
 		(**eit).setParent(this);
 	}
 }
 
 XmlNode::XmlNode(ElementName aname, XmlNode * parent):
-XmlElement(parent), name(aname), attributs(), childs()
+XmlElement(parent), name(aname), attributs(), children()
 {
 	
 }
 
 XmlNode::XmlNode(string ns, string aname, XmlNode * parent):
-XmlElement(parent), name(ns,aname), attributs(), childs()
+XmlElement(parent), name(ns,aname), attributs(), children()
 {
 	
 }
@@ -47,7 +48,7 @@ bool XmlNode::addAttribute(string name, string content)
 //Ajoute un fils au noeud.
 void XmlNode::addChild(XmlElement * element)
 {
-	childs.push_back(element);
+	children.push_back(element);
 }
 	
 string XmlNode::toString(int level) const
@@ -77,13 +78,13 @@ string XmlNode::toString(int level) const
 	
 	// Si notre nœud des fils, affichons-les
 
-	if(childs.size() > 0)
+	if(children.size() > 0)
 	{
 		repr += ">"; // Terminons donc le tag ouvert
 
 		// Pour chaque fils...
 		ElementList::const_iterator eit;
-		for(eit = childs.begin(); eit != childs.end(); ++eit)
+		for(eit = children.begin(); eit != children.end(); ++eit)
 		{
 			// On appelle sa méthode d'affichage
 			repr += (**eit).toString(level + 1);
@@ -114,21 +115,36 @@ string XmlNode::toString(int level) const
 	return repr;
 }
 
-ElementName XmlNode::getName() {
+ElementName XmlNode::getName() const {
 	return name;
 }
 
-ElementList XmlNode::getDirectChildren() {
-	ElementList childlist;
-
-	// Pour chaque fils...
+bool XmlNode::isValid(DtdDoc & validator)
+{
+	//validation des attributs
+	if(!validator.validate(name.second,attributs))
+		return false;
+	//validation de la liste des fils
+	if(!validator.validate(name.second,getDirectChildrenNames()))
+		return false;
+	//validation des fils
 	ElementList::const_iterator eit;
-	for(eit = childs.begin(); eit != childs.end(); ++eit)
+	for(eit = children.begin() ; eit != children.end() ; ++eit)
 	{
-		childlist.push_back(*eit);
+		if(!(**eit).isValid(validator))
+			return false;
 	}
+	return true;
+}
 
-	return childlist;
+string XmlNode::getSemName() const
+{
+	return name.second;
+}
+
+ElementList XmlNode::getDirectChildren() {
+	
+	return children;
 }
 
 string XmlNode::getDirectChildrenNames() {
@@ -136,15 +152,9 @@ string XmlNode::getDirectChildrenNames() {
 
 	// Pour chaque fils...
 	ElementList::const_iterator eit;
-	for(eit = childs.begin(); eit != childs.end(); ++eit)
+	for(eit = children.begin(); eit != children.end(); ++eit)
 	{
-		// On obtient un enfant
-		XmlNode * xmln = (dynamic_cast<XmlNode *>(*eit));
-		
-		// Est-ce bien un node ?
-		if(xmln != 0){
-			namelist += xmln->getName().second + " ";
-		}
+			namelist += (**eit).getSemName() + " ";
 	}
 
 	if(namelist.size() > 0)
@@ -156,7 +166,7 @@ string XmlNode::getDirectChildrenNames() {
 XmlNode::~XmlNode()
 {
 	ElementList::iterator it;
-	for(it = childs.begin(); it != childs.end(); ++it)
+	for(it = children.begin(); it != children.end(); ++it)
 	{
 		delete (*it);
 	}

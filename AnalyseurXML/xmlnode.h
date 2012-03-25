@@ -6,13 +6,14 @@
 
 #include "xmlelement.h"
 #include "commun.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 
 class XmlNode : public XmlElement {
 	
 	ElementName name;
 	AttMap attributs;
-	ElementList childs;
+	ElementList children;
 	
 	public :
 		//Constructeurs
@@ -25,10 +26,14 @@ class XmlNode : public XmlElement {
 		bool addAttribute(Attribut att); 
 		bool addAttribute(std::string name, std::string content);
 		
+		//validateur
+		virtual bool isValid(DtdDoc & validator);
+		
 		//Ajoute un fils au noeud.
 		void addChild(XmlElement * element);
 
-		ElementName getName();
+		ElementName getName() const;
+		virtual std::string getSemName() const;
 		
 		//Getters
 		virtual std::string toString(int level=0) const;

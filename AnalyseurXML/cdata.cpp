@@ -3,6 +3,7 @@
 #include "cdata.h"
 #include "xmlelement.h"
 #include "xmlnode.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 using namespace std;
 
@@ -21,6 +22,16 @@ string Cdata::toString(int level) const
 	// une indentation agréable en utilisant level.
 
 	return repr;
+}
+
+string Cdata::getSemName() const
+{
+	return string("#PCDATA");
+}
+
+bool Cdata::isValid(DtdDoc & validator)
+{
+	return true;
 }
 
 Cdata::~Cdata()

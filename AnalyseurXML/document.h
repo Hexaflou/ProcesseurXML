@@ -5,6 +5,7 @@
 
 #include "xmlnode.h"
 #include "doctype.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 class Document
 {
@@ -22,6 +23,8 @@ class Document
 		XmlNode * getRoot();
 		
 		void setDoctype(Doctype & doctype);
+		
+		bool isValid();
 		
 		std::string toString();
 		

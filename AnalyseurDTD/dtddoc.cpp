@@ -79,3 +79,25 @@ bool DtdDoc::parse()
 	fclose(fid);
 	return ret;
 }
+
+bool DtdDoc::validate(std::string nodeName, AttMap attributs) const
+{
+	ElemMap::const_iterator it(elements.find(nodeName));
+	if(it == elements.end())
+	{
+		cout << nodeName << " is an unknown element." << endl;
+		return false;
+	}
+	return it->second.validate(attributs);
+}
+
+bool DtdDoc::validate(std::string parentName, std::string childrenNames) const
+{
+	ElemMap::const_iterator it(elements.find(parentName));
+	if(it == elements.end())
+	{
+		cout << parentName << " is an unknown element." << endl;
+		return false;
+	}
+	return it->second.validate(childrenNames);
+}

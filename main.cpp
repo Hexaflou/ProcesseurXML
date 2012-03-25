@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include "AnalyseurXML/commun.h"
 #include "AnalyseurXML/xyloxml.h"
 #include "AnalyseurDTD/xylodtd.h"

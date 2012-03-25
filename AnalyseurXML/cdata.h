@@ -4,6 +4,7 @@
 #include <string>
 #include "xmlelement.h"
 #include "xmlnode.h"
+#include "../AnalyseurDTD/dtddoc.h"
 
 class Cdata : public XmlElement{
 	
@@ -14,6 +15,10 @@ class Cdata : public XmlElement{
 	
 	//Getters
 	virtual std::string toString(int level=0) const;
+	
+	virtual std::string getSemName() const;
+	
+	virtual bool isValid(DtdDoc & validator);
 	
 	virtual ~Cdata();
 };

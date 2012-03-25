@@ -18,7 +18,11 @@ class Doctype {
 	bool parse();
 	
 	// Getter
-	std::string toString();
+	std::string toString() const;
+	
+	std::string getRootName() const;
+	
+	DtdDoc & getDtd();
 };
 
 #endif

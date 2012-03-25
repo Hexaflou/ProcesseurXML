@@ -20,11 +20,21 @@ Doctype::Doctype (string arootName, string sportee, string adtdUrl):
 	parse();
 }
 
-string Doctype::toString()
+string Doctype::toString() const
 {
 	string ret("<!DOCTYPE ");
 	ret += rootName + " " + ((isPublic) ? "PUBLIC " : "SYSTEM ") + "\"" + dtdDoc.getFilePath() + "\">";
 	return ret;
+}
+
+string Doctype::getRootName() const
+{
+	return rootName;
+}
+
+DtdDoc & Doctype::getDtd()
+{
+	return dtdDoc;
 }
 
 bool Doctype::parse()

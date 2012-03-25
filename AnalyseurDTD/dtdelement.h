@@ -6,6 +6,7 @@
 #include <set>
 
 #include  "dtdattribute.h"
+typedef std::map<std::string,std::string> AttMap;
 
 class DtdElement {
 
@@ -15,12 +16,12 @@ class DtdElement {
 	//d'une evolutivité il faudrai remplacer ce string 
 	//par un objet de type attribut
 	//TODO: Réfléchir à l'utilisation d'un map au lieu d'un set...
-	std::set<DtdAttribute> attributs;
-	//for the return of an insert in the attribute list.
-	typedef std::pair<std::set<DtdAttribute>::iterator,bool> RetAttInsert;
 	
-	//represente les fils autorisees sous forme de regex;
-	regex_t childs;
+	typedef std::set<DtdAttribute> AttSet;
+	AttSet attributs;
+	//for the return of an insert in the attribute list.
+	typedef std::pair<AttSet::iterator,bool> RetAttInsert;
+	
 	//directement tiree du fichier le pattern regex
 	std::string regexPattern;
 	 
@@ -36,7 +37,8 @@ class DtdElement {
 		
 		void completeChildPattern(std::string r);//TODO:c'est tout pour le moment
 		
-		
+		bool validate(AttMap attributes) const;
+		bool validate(std::string childrenNames) const;
 		
 		//TODO:implementer les fonctions de verification
 		//verifie si la liste de fils (sous forme de string séparé par des virgules)

@@ -3,6 +3,7 @@
 
 #include "dtdelement.h"
 #include "dtdattribute.h"
+#include <boost/regex.hpp> 
 
 using namespace std;
 
@@ -57,6 +58,34 @@ string DtdElement::attributeListToString() const
 void DtdElement::completeChildPattern(string r)
 {
 	regexPattern += r;
+}
+
+bool DtdElement::validate(AttMap xmlAttributes) const
+{
+	AttMap::const_iterator ait;
+	
+	for(ait = xmlAttributes.begin() ; ait != xmlAttributes.end() ; ++ait)
+	{
+		//Si l'attributs n'est pas référencé il y a une erreur
+		if(attributs.find(DtdAttribute(ait->first,0))==attributs.end())
+		{
+			cout << ait->first << " is not a valid attribute for ";
+			cout << name << " node."<< endl;
+			return false;
+		}
+	}
+	return true;
+}
+
+bool DtdElement::validate(std::string childrenNames) const
+{
+	static boost::regex reg(regexPattern);
+	if(!boost::regex_match(childrenNames, reg))
+	{
+		cout << "Children of the node " << name << "are not valid." << endl;
+		return false;
+	}
+	return true;
 }
 
 std::string DtdElement::getName() const

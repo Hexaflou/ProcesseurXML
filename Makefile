@@ -4,7 +4,7 @@ EDL	= g++
 LDFLAGS	= -g -DDYDEBUG=1
 EXEC_NAME = Xylo
 INCLUDES =
-LIBS =
+LIBS = -lboost_regex 
 
 all : $(EXEC_NAME)
 
@@ -19,4 +19,4 @@ objs :
 	$(CC) -o main.o -c main.cpp $(CFLAGS)
 	
 $(EXEC_NAME) : objs
-	$(EDL) -o $(EXEC_NAME) $(wildcard AnalyseurXML/*.o) $(wildcard AnalyseurDTD/*.o) main.o $(LIBS)
+	$(EDL) $(LDFLAGS) -o $(EXEC_NAME) $(wildcard AnalyseurXML/*.o) $(wildcard AnalyseurDTD/*.o) main.o $(LIBS)

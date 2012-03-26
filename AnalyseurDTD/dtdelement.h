@@ -4,6 +4,7 @@
 #include <regex.h>
 #include <string>
 #include <set>
+#include <map>
 
 #include  "dtdattribute.h"
 typedef std::map<std::string,std::string> AttMap;

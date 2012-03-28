@@ -15,7 +15,7 @@
 	<!-- Template pour le titre -->
 	<xsl:template match="titre">
 		<h1>
-			<xsl:value-of select="." />
+			<xsl:apply-templates />
 		</h1>			
 	</xsl:template>
 
@@ -26,7 +26,7 @@
 				Auteur
 			</h2>
 		<li>
-			<xsl:value-of select="nom" /><xsl:text> </xsl:text><xsl:value-of select="prenom" />
+			<xsl:apply-templates />
 		</li>			
 	</xsl:template>
 
@@ -35,23 +35,20 @@
 		<h2>
 			Résumé
 		</h2>
-		<p><xsl:value-of select="resume" /></p>
+		<p>
+			<xsl:apply-templates />
+		</p>
 	</xsl:template>
 
 	<!-- Template pour les chapitres -->
 	<xsl:template match="chapitre">		
-		<xsl:if test="./@titre">
-		<h2>
-			<xsl:value-of select="@titre" />
-		</h2>
-		</xsl:if>			
 		<xsl:apply-templates />
 	</xsl:template>
 
 	<!-- Template pour les titres de section -->
 	<xsl:template match="section/titre">
 		<h2>
-			<xsl:value-of select="." />
+			<xsl:apply-templates />
 		</h2>
 	</xsl:template>
 

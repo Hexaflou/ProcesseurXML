@@ -68,3 +68,8 @@ string Document::toString()
 	
 	return ret;
 }
+
+void Document::toTree(Document * p_xslDocument)
+{
+	root.toHtml(p_xslDocument->getRoot(), &root);
+}

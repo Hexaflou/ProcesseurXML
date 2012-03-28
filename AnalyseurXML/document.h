@@ -27,6 +27,9 @@ class Document
 		bool isValid();
 		
 		std::string toString();
+
+		void toTree(Document * p_xslDocument);
+
 		
 	
 };

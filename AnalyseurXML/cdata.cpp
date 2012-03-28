@@ -34,6 +34,11 @@ bool Cdata::isValid(DtdDoc & validator)
 	return true;
 }
 
+
+void Cdata::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level){
+	fputs (toString(level).c_str(),&file);
+}
+
 Cdata::~Cdata()
 {
 	

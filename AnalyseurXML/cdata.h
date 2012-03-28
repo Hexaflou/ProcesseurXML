@@ -19,6 +19,8 @@ class Cdata : public XmlElement{
 	virtual std::string getSemName() const;
 	
 	virtual bool isValid(DtdDoc & validator);
+
+	virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0);
 	
 	virtual ~Cdata();
 };

@@ -212,8 +212,7 @@ void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int
 		// donc si aucun template n'a été trouvé, l'affichage ne se fera pas.
 		if (level == 0)
 		{
-		}else{	// Cas du <apply-template />
-			fputs (toStringNode(level).c_str(),&file);
+		}else{	// Cas du <apply-template />			
 			ElementList::iterator elementIt;
 			for (elementIt = children.begin(); elementIt != children.end(); elementIt++)
 			{

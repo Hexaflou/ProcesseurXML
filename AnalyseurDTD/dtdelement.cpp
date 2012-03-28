@@ -9,51 +9,45 @@
 
 using namespace std;
 
-
-DtdElement::DtdElement(string aname): name(aname)
+DtdElement::DtdElement(string aname) : name(aname)
 {
-	
+
 }
 
 bool DtdElement::addAttribute(string const & name)
 {
 	DtdElement::RetAttInsert ret = attributs.insert(DtdAttribute(name, this));
-	
+
 	return ret.second;
 }
 
 string DtdElement::toString() const
 {
-	if(regexPattern != "")
-	{
+	if (regexPattern != "") {
 		string ret("<!ELEMENT ");
 		ret += name + " " + regexPattern + ">";
 		return ret;
-	}
-	else
-	{
+	} else {
 		return string();
 	}
 }
 
 string DtdElement::attributeListToString() const
 {
-	if(attributs.size() == 0)
+	if (attributs.size() == 0)
 		return string("");
 
 	string ret("<!ATTLIST ");
 	ret += name;
 
 	set<DtdAttribute>::iterator it;
-	for ( it=attributs.begin() ; it != attributs.end(); ++it )
-	{
+	for (it = attributs.begin(); it != attributs.end(); ++it) {
 		ret += "\n\t" + it->toString();
 	}
 
 	ret += ">";
 
 	return ret;
-	
 }
 
 void DtdElement::completeChildPattern(string r)
@@ -64,14 +58,12 @@ void DtdElement::completeChildPattern(string r)
 bool DtdElement::validate(AttMap xmlAttributes) const
 {
 	AttMap::const_iterator ait;
-	
-	for(ait = xmlAttributes.begin() ; ait != xmlAttributes.end() ; ++ait)
-	{
-		//Si l'attributs n'est pas référencé il y a une erreur
-		if(attributs.find(DtdAttribute(ait->first,0))==attributs.end())
-		{
+
+	for (ait = xmlAttributes.begin(); ait != xmlAttributes.end(); ++ait) {
+		// Si l'attribut n'est pas référencé, il y a une erreur
+		if (attributs.find(DtdAttribute(ait->first, 0)) == attributs.end()) {
 			cout << ait->first << " is not a valid attribute for ";
-			cout << name << " node."<< endl;
+			cout << name << " node." << endl;
 			return false;
 		}
 	}
@@ -80,20 +72,25 @@ bool DtdElement::validate(AttMap xmlAttributes) const
 
 bool DtdElement::validate(std::string childrenNames) const
 {
+	// On crée un pattern à partir du motif trouvé dans le fichier DTD
 	string patt("^" + regexPattern + "( *)$");
-	
+
+	// On remplace simplement les virgules par des espaces
 	replace(patt.begin(), patt.end(), ',', ' ');
-	boost::regex reg(patt, boost::regex::extended);
 	
-	if(!boost::regex_match(childrenNames, reg))
-	{
-		// TODO: OMG, this is an ugly message
+	// Et on crée la regex avec un moteur classique d'expressions régulières
+	// (ici, Boost::Regex)
+	boost::regex reg(patt, boost::regex::extended);
+
+	// Si l'expression régulière ne correspond pas, c'est qu'il y a un hic
+	if (!boost::regex_match(childrenNames, reg)) {
 		cerr << "[Validation] Children of the node " << name << " are not valid." << endl;
-		cerr << "[Validation] Pattern is \" " << patt << " \" and the children list is \" " 
-			 << childrenNames << " \"." <<endl; 
+		cerr << "[Validation] (pattern is \"" << patt << "\" while children list is \""
+				<< childrenNames << "\")" << endl;
 		return false;
 	}
-	
+
+	// Sinon, c'est que les noms des enfants sont valides 
 	return true;
 }
 
@@ -102,7 +99,7 @@ std::string DtdElement::getName() const
 	return name;
 }
 
-//Surcharges d'opérateur
+// Surcharges d'opérateur
 
 bool operator<=(DtdElement const &a, DtdElement const& b)
 {

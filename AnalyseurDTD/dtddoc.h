@@ -15,7 +15,7 @@ class DtdDoc {
 	typedef std::pair<ElemMap::iterator,bool> RetElemInsert;
 	typedef std::pair<std::string,DtdElement> MapElem;
 		
-	public :
+	public:
 		DtdDoc(std::string filepath);
 		
 		//renvoi faux si l'élément existe

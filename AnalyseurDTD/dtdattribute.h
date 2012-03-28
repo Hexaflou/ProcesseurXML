@@ -6,17 +6,16 @@
 class DtdElement;
 
 class DtdAttribute {
-	
-	std::string name;
-	DtdElement * parent;
-	
-	public :
-		DtdAttribute(std::string name, DtdElement * element);
-		
-		//getter
-		std::string getName() const;
-		std::string toString() const;
-		
+    std::string name;
+    DtdElement * parent;
+
+public:
+    DtdAttribute(std::string name, DtdElement * element);
+
+    //getter
+    std::string getName() const;
+    std::string toString() const;
+
 };
 
 //surcharge d'opérateur pour utilisation dans un set

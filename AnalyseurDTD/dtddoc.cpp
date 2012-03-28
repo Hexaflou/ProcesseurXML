@@ -12,7 +12,7 @@ using namespace std;
 int xylodtdparse(DtdDoc *);
 extern FILE * xylodtdin;
 
-DtdDoc::DtdDoc(std::string afilepath):filepath(afilepath)
+DtdDoc::DtdDoc(std::string afilepath): filepath(afilepath)
 {
 	
 }
@@ -20,8 +20,9 @@ DtdDoc::DtdDoc(std::string afilepath):filepath(afilepath)
 
 bool DtdDoc::addElement(DtdElement element)
 {
+	
 	DtdDoc::RetElemInsert ret = elements.insert(
-					DtdDoc::MapElem(element.getName(),element) );
+	DtdDoc::MapElem(element.getName(),element) );
 	return ret.second;
 }
 
@@ -29,12 +30,12 @@ bool DtdDoc::addElement(DtdElement element)
 bool DtdDoc::addAttributetoElement(std::string const &elementName, std::string const &attribut)
 {
 	map<string,DtdElement>::iterator elementPtr = elements.find(elementName);
+	
 	if(elementPtr == elements.end())
 	{
 		DtdElement elem(elementName);
 		elem.addAttribute(attribut);
-		elements.insert(
-				DtdDoc::MapElem(elementName,elem) );
+		elements.insert(DtdDoc::MapElem(elementName,elem));
 		return true;
 	}
 	else
@@ -71,7 +72,7 @@ bool DtdDoc::parse()
 	fid = fopen(filepath.c_str(),"r");
 	if(!fid)
 	{
-		cerr << "E: Dtd file " << filepath << " can't be read." << endl;
+		cerr << "[Validation] Dtd file \"" << filepath << "\" can't be read." << endl;
 		return false;
 	}
 	xylodtdin = fid;
@@ -85,7 +86,7 @@ bool DtdDoc::validate(std::string nodeName, AttMap attributs) const
 	ElemMap::const_iterator it(elements.find(nodeName));
 	if(it == elements.end())
 	{
-		cout << nodeName << " is an unknown element." << endl;
+		cerr << "[Validation] \"" << nodeName << "\" is an unknown element." << endl;
 		return false;
 	}
 	return it->second.validate(attributs);
@@ -96,7 +97,7 @@ bool DtdDoc::validate(std::string parentName, std::string childrenNames) const
 	ElemMap::const_iterator it(elements.find(parentName));
 	if(it == elements.end())
 	{
-		cout << parentName << " is an unknown element." << endl;
+		cerr << "[Validation] \"" << parentName << "\" is an unknown element." << endl;
 		return false;
 	}
 	return it->second.validate(childrenNames);

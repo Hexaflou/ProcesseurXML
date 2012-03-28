@@ -10,14 +10,13 @@
 using namespace std;
 
 
-DtdElement::DtdElement(string aname):name(aname)
+DtdElement::DtdElement(string aname): name(aname)
 {
 	
 }
 
 bool DtdElement::addAttribute(string const & name)
 {
-	
 	DtdElement::RetAttInsert ret = attributs.insert(DtdAttribute(name, this));
 	
 	return ret.second;
@@ -81,15 +80,20 @@ bool DtdElement::validate(AttMap xmlAttributes) const
 
 bool DtdElement::validate(std::string childrenNames) const
 {
-	string patt("^"+regexPattern+"( *)$");
-	replace(patt.begin(),patt.end(),',',' ');
+	string patt("^" + regexPattern + "( *)$");
+	
+	replace(patt.begin(), patt.end(), ',', ' ');
 	boost::regex reg(patt, boost::regex::extended);
+	
 	if(!boost::regex_match(childrenNames, reg))
 	{
-		cout << "Children of the node " << name << " are not valid." << endl;
-		cout << "Pattern is \" " << patt << " \" and the children list is \" " << childrenNames << " \""<<endl; 
+		// TODO: OMG, this is an ugly message
+		cerr << "[Validation] Children of the node " << name << " are not valid." << endl;
+		cerr << "[Validation] Pattern is \" " << patt << " \" and the children list is \" " 
+			 << childrenNames << " \"." <<endl; 
 		return false;
 	}
+	
 	return true;
 }
 

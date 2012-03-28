@@ -33,7 +33,7 @@ XmlNode(ns, aname, parent)
 
 }
 
-void XslTemplate::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file,int level)
+void XslTemplate::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file,int level, bool findMatch)
 {
 	ElementList::iterator elementIt;
 	for (elementIt = children.begin(); elementIt != children.end(); elementIt++)

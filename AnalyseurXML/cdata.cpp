@@ -35,7 +35,7 @@ bool Cdata::isValid(DtdDoc & validator)
 }
 
 
-void Cdata::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level){
+void Cdata::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level, bool findMatch){
 	fputs (toString(level).c_str(),&file);
 }
 

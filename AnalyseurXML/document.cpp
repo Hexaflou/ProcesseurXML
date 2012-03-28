@@ -96,14 +96,21 @@ void Document::toTree(Document * xslDocument)
             	
         }
         else  // sinon
-                root.toHtml(xslDocument->getRoot(), 0, *fid, 0);
+                root.toHtml(xslDocument->getRoot(), &root, *fid, 0, true);
                 fclose(fid);
 }
 
 Document* Document::transformToXsltTree()
 {
 	if (root.getName().first == "xsl"){
-		XmlNode * newRoot = new XmlNode(root);
+		XmlNode * newRoot = new XmlNode(root.getName());
+		// Copie des attributs
+		AttMap::iterator attributIt;
+		AttMap attMap = root.getAttMap();
+		for (attributIt = attMap.begin(); attributIt != attMap.end(); attributIt++)
+		{
+			newRoot->addAttribute(*attributIt);
+		}
 		ElementList::iterator elementIt;
 		ElementList xmlChildren = root.getDirectChildren();
 		for (elementIt = xmlChildren.begin(); elementIt != xmlChildren.end(); elementIt++)

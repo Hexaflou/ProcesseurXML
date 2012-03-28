@@ -200,19 +200,47 @@ string XmlNode::getDirectChildrenNames() {
 	return namelist;
 }
 
-void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level)
+XmlNode * XmlNode::findXmlNodeByNameByAttr(string firstName, string secondName, Attribut aattribut)
 {
 	AttMapIt attributXsl;
-	attributXsl = p_xslNode->getAttMap().find("match");
-	if ( (p_xslNode->getName().first == "xsl") && (p_xslNode->getName().second == "template")
-		&& (attributXsl != p_xslNode->getAttMap().end()) && ((*attributXsl).second == name.second)){
-			p_xslNode->toHtml(p_xslNode, this, file, level);
+	attributXsl = attributs.find("match");
+	XmlNode * result;
+	if (name.first == firstName && name.second == secondName && (attributXsl != attributs.end()) && ((*attributXsl).second == aattribut.second)){
+		std::cout<<"CACA"<<endl;
+		return this;
+	}else
+	{
+		ElementList::iterator elementIt;
+		for (elementIt = children.begin(); elementIt != children.end(); elementIt++)
+		{
+			result = dynamic_cast<XmlNode*>((*elementIt));
+			if (result!=0){
+				result = ((XmlNode *)(*elementIt))->findXmlNodeByNameByAttr(firstName, secondName, aattribut);
+				if (result != 0)
+					return result;
+			}
+		}
+		return 0;
+	}
+}
+
+void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level, bool findMatch)
+{
+	AttMapIt attributXsl;
+	XmlNode * result = 0;
+	if (findMatch){
+		string xsl = "xsl", temp = "template";
+		Attribut attr("match",p_xmlNode->getSemName());
+		result = p_xslNode->findXmlNodeByNameByAttr(xsl, temp, attr);
+	}
+	if (result != 0){
+			result->toHtml(p_xslNode, this, file, level);
 	}else{
 		// level == 0 correspond au fait que notre objet est le noeud xml racine
 		// donc si aucun template n'a été trouvé, l'affichage ne se fera pas.
 		if (level == 0)
 		{
-		}else{	// Cas du <apply-template />			
+		}else{	// Cas du <apply-template />
 			ElementList::iterator elementIt;
 			for (elementIt = children.begin(); elementIt != children.end(); elementIt++)
 			{
@@ -232,11 +260,12 @@ XmlElement* XmlNode::transformToXsltTree(){
 		{
 			newNode = new XslTemplate(name);
 		}else{
-			newNode = new XmlNode();
+			newNode = new XmlNode(name);
 		}
 	}else
 	{
-		newNode = new XmlNode();
+		newNode = new XmlNode(name);
+		
 	}
 
 	// Copie des attributs
@@ -252,6 +281,7 @@ XmlElement* XmlNode::transformToXsltTree(){
 	{
 		newNode->addChild((*elementIt)->transformToXsltTree());
 	}
+	//std::cout<<newNode->toString()<<endl;
 	return newNode;
 }
 

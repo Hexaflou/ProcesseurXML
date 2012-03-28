@@ -57,7 +57,7 @@ class XmlElement {
          * @param file ??
          * @param level ??
          */
-		virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0) = 0;
+		virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0, bool findMatch=false) = 0;
 		
 		/**
 		 * 

@@ -33,12 +33,12 @@ XmlNode(ns, aname, parent)
 
 }
 
-void XslApplyTemplate::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file,int level)
+void XslApplyTemplate::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file,int level, bool findMatch)
 {
 	ElementList::iterator elementIt;
 	ElementList xmlChildren = ((XmlNode*)p_xmlNode)->getDirectChildren();
 	for (elementIt = xmlChildren.begin(); elementIt != xmlChildren.end(); elementIt++)
 	{
-		(*elementIt)->toHtml(p_xslNode, 0, file, level+1);
+		(*elementIt)->toHtml(p_xslNode, 0, file, level+1, true);
 	}
 }

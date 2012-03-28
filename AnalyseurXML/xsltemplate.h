@@ -19,7 +19,7 @@ class XslTemplate : public XmlNode {
 
 
 		//Affichage en html
-		virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0);
+		virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0, bool findMatch = false);
 };
 
 #endif

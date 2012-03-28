@@ -41,11 +41,14 @@ class XmlNode : public XmlElement {
 		virtual std::string toString(int level=0) const;
 		virtual std::string toStringNode(int level=0) const;
 
+		// Méthode de recherche d'un noeud XML en retournant le premier noeud correspondant au nom et à l'attribut en param.
+		XmlNode * findXmlNodeByNameByAttr(std::string firstName, std::string secondName, Attribut aattribut);
+		
 		ElementList getDirectChildren();
 		std::string getDirectChildrenNames();
 
 		//Affichage en html
-		void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0);
+		void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0, bool findMatch = true);
 		
 		//destructeur
 		virtual ~XmlNode();

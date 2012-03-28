@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 					Document * thedocxslt = new Document(string(argv[2]));
 					thedocxslt->parse();
 					Document * newdocxslt = thedocxslt->transformToXsltTree();
+					cout << newdocxslt->toString() << endl;
 					delete thedocxslt;
 					thedoc->toTree(newdocxslt);
 				}

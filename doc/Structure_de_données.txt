@@ -1,0 +1,22 @@
+1er objet parsé :
+
+*** Document ***
+
+Doctype
+XmlNode root
+
+*** Doctype ***
+
+Contient un objet DTD, venant de l'analyse complète de la DTD
+(appel d'AnalyseurDTD)
+
+*** XmlNode ***
+
+Contient une liste d'attributs, et une liste de fils
+--> pattern composite
+
+*** XmlElement ***
+
+'provisoire' :
+élément pas encore parsé :
+sera ensuite transformé soit en XmlNode, soit en CData

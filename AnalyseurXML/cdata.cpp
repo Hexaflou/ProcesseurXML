@@ -39,6 +39,11 @@ void Cdata::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int l
 	fputs (toString(level).c_str(),&file);
 }
 
+XmlNode* Cdata::transformToXsltTree() {
+	// Stub.
+	return 0;
+}
+
 Cdata::~Cdata()
 {
 	

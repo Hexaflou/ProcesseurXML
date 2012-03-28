@@ -6,7 +6,7 @@ EDL	= g++
 LDFLAGS	= -g -DDYDEBUG=1
 LIBS = 
 SRC	= $(wildcard *.cpp)
-OBJS	= $(SRC:.cpp=.o)
+OBJS	= $(SRC:.cpp=.o) lex.$(XMLPREFIX).o  $(XMLPREFIX).tab.o
 EXE     = analyseXML
 
 all: analyseXML

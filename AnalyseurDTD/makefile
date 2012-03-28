@@ -6,7 +6,7 @@ EDL	= g++
 LDFLAGS	= -g -DDYDEBUG=1
 LIBS = 
 SRC	= $(wildcard *.cpp)
-OBJS	= $(SRC:.cpp=.o)
+OBJS	= $(SRC:.cpp=.o) lex.$(DTDPREFIX).o  $(DTDPREFIX).tab.o
 EXE     = analyseDTD
 
 all: analyseDTD
@@ -14,16 +14,20 @@ all: analyseDTD
 %.o : %.cpp
 	$(CC) $(CCFLAGS) -o $@ -c $<
 	
-bison : $(DTDPREFIX).l $(DTDPREFIX).y
+%.o : %.c
+	$(CC) $(CCFLAGS) -o $@ -c $<
+	
+lex.$(DTDPREFIX).c: $(DTDPREFIX).l
 	flex -P$(DTDPREFIX) $(DTDPREFIX).l
+	
+$(DTDPREFIX).tab.h $(DTDPREFIX).tab.c: $(DTDPREFIX).y
 	bison -p$(DTDPREFIX) --debug --verbose --defines=$(DTDPREFIX).tab.h $(DTDPREFIX).y
 	
+bison : lex.$(DTDPREFIX).c $(DTDPREFIX).tab.h lex.$(DTDPREFIX).c
+	
 objs : bison $(OBJS)
-	$(CC) $(CCFLAGS) -o lex.$(DTDPREFIX).o -c lex.$(DTDPREFIX).c
-	$(CC) $(CCFLAGS) -o $(DTDPREFIX).tab.o -c $(DTDPREFIX).tab.c
-
 analyseDTD: objs
-	$(EDL) $(LDFLAGS) -o $(EXE) lex.$(DTDPREFIX).o  $(DTDPREFIX).tab.o $(OBJS) $(LIBS)
+	$(EDL) $(LDFLAGS) -o $(EXE) $(OBJS) $(LIBS)
 
 clean:
 	-rm -rf *.tab.c lex.*.c *.tab.h *.output $(OBJS) $(EXE)

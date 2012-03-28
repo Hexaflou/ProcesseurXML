@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
 			// Lancement de la validation XML
 			if (thedoc->isValid()) {
 				cout << "[Xylo] Le document spécifié est valide." << endl;
-				Document * thedocxslt = new Document(string(argv[2]));
+/*				Document * thedocxslt = new Document(string(argv[2]));
 				thedocxslt->parse();
 				Document * newdocxslt = thedocxslt->transformToXsltTree();
 				delete thedocxslt;
-				thedoc->toTree(newdocxslt);
+				thedoc->toTree(newdocxslt);*/
 			} else {
 				cout << "[Xylo] La document spécifié n'est pas valide." << endl;
 				codeRetour = 0;

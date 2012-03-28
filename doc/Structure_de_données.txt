@@ -10,13 +10,16 @@ XmlNode root
 Contient un objet DTD, venant de l'analyse complète de la DTD
 (appel d'AnalyseurDTD)
 
+*** XmlElement ***
+
+élément abstrait :
+soit un XmlNode, soit un CData
+
 *** XmlNode ***
 
 Contient une liste d'attributs, et une liste de fils
 --> pattern composite
 
-*** XmlElement ***
+*** CData ***
 
-'provisoire' :
-élément pas encore parsé :
-sera ensuite transformé soit en XmlNode, soit en CData
+Character Data, 'string'

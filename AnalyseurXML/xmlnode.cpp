@@ -204,7 +204,7 @@ void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int
 	attributXsl = p_xslNode->getAttMap().find("match");
 	if ( (p_xslNode->getName().first == "xsl") && (p_xslNode->getName().second == "template")
 		&& (attributXsl != p_xslNode->getAttMap().end()) && ((*attributXsl).second == name.second)){
-			p_xslNode->toHtml(0, this, file, level);
+			p_xslNode->toHtml(p_xslNode, this, file, level);
 	}else{
 		// level == 0 correspond au fait que notre objet est le noeud xml racine
 		// donc si aucun template n'a été trouvé, l'affichage ne se fera pas.

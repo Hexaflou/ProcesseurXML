@@ -19,7 +19,6 @@ int xyloxmllex(void);
    char * s;
    ElementName * en;  /* le nom d'un element avec son namespace */
    XmlNode * xmln;
-   XslApplyTemplate * xslap;
    std::list<XmlElement *> * lxmlep;
    AttMap * am;
    Attribut * att;
@@ -31,7 +30,6 @@ int xyloxmllex(void);
 %token <en> NSSTART START STARTSPECIAL END NSEND
 %type <en> start
 %type <xmln> xml_element
-%type <xslap> xsl_apply_template
 %type <lxmlep> empty_or_content close_content_and_end content_opt
 %type <att> attribute
 %type <am> attributes_opt
@@ -69,13 +67,12 @@ dec_doctype /* Doctype */
  : DOCTYPE IDENT IDENT STRING CLOSE 	{ $$= new Doctype($2,$3,$4); }
  ;
 
+
+
 xml_element /* XmlNode */
  : start attributes_opt empty_or_content { $$ = new XmlNode(*$1, *$2, *$3); } /* parent ? */
  ;
 
-xsl_apply_template /* XslApplyTemplate */
- : start attributes_opt empty_or_content { $$ = new XslApplyTemplate(*$1, *$2, *$3); } /* parent ? */
- ;
 
 attributes_opt /* AttMap */
  : attributes_opt attribute		{$$ = $1; (*$1)[$2->first]=$2->second;}

@@ -206,7 +206,6 @@ XmlNode * XmlNode::findXmlNodeByNameByAttr(string firstName, string secondName, 
 	attributXsl = attributs.find("match");
 	XmlNode * result;
 	if (name.first == firstName && name.second == secondName && (attributXsl != attributs.end()) && ((*attributXsl).second == aattribut.second)){
-		std::cout<<"CACA"<<endl;
 		return this;
 	}else
 	{

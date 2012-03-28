@@ -43,8 +43,7 @@ int main(int argc, char *argv[])
 				if(argc == 3) { // Fichier XSLT spécifié ?
 					Document * thedocxslt = new Document(string(argv[2]));
 					thedocxslt->parse();
-					Document * newdocxslt = thedocxslt->transformToXsltTree();
-					cout << newdocxslt->toString() << endl;
+					Document * newdocxslt = thedocxslt->transformToXsltTree();					
 					delete thedocxslt;
 					thedoc->toTree(newdocxslt);
 				}

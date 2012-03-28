@@ -16,7 +16,7 @@ using namespace std;
  * 
  * @param argc Nombre d'arguments en entrée.
  * @param argv Tableaux des arguments du programmes.
- * @return 0 (SUCCESS) si la validation s'est bien déroulée,
+ * @return 0 si la validation s'est bien déroulée,
  *		   1 dans les autres cas.
  */
 int main(int argc, char *argv[])

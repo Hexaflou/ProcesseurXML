@@ -11,10 +11,10 @@
 
 
 class XmlNode : public XmlElement {
-	
-	ElementName name;
-	AttMap attributs;
-	ElementList children;
+	protected:
+		ElementName name;
+		AttMap attributs;
+		ElementList children;
 	
 	public :
 		//Constructeurs
@@ -39,12 +39,13 @@ class XmlNode : public XmlElement {
 		
 		//Getters
 		virtual std::string toString(int level=0) const;
+		virtual std::string toStringNode(int level=0) const;
 
 		ElementList getDirectChildren();
 		std::string getDirectChildrenNames();
 
 		//Affichage en html
-		void toHtml(XmlNode * p_xslNode, XmlNode * p_xmlNode);
+		void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0);
 		
 		//destructeur
 		virtual ~XmlNode();

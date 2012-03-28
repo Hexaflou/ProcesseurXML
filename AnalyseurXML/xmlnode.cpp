@@ -1,6 +1,6 @@
 #include <string>
 #include <list>
-
+#include <cstdio>
 
 #include "xmlelement.h"
 #include "xmlnode.h"
@@ -116,6 +116,36 @@ string XmlNode::toString(int level) const
 	return repr;
 }
 
+string XmlNode::toStringNode(int level) const
+{
+	string repr("\n"); // On s'assure d'être sur une nouvelle ligne
+
+	// Indentation agréable (selon le paramètre level)
+
+	int i;
+	for(i = 0; i < level; ++i)
+		repr += "\t";
+
+	// Affichage du début du tag ("<body", ou "<svg:line")
+
+	if(name.first == "") // Sans namespace
+		repr += "<" + name.second;
+	else                 // Avec namespace
+		repr += "<" + name.first + ":" + name.second;
+
+	// Affichage des attributs
+
+	AttMap::const_iterator ait;
+	for(ait = attributs.begin() ; ait != attributs.end() ; ++ait)
+	{
+		repr += " " + ait->first + "=\"" + ait->second + "\"";
+	}
+
+	repr += " />";
+
+	return repr;
+}
+
 ElementName XmlNode::getName() const {
 	return name;
 }
@@ -168,13 +198,26 @@ string XmlNode::getDirectChildrenNames() {
 	return namelist;
 }
 
-void XmlNode::toHtml(XmlNode * p_xslNode, XmlNode * p_xmlNode)
+void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level)
 {
 	AttMapIt attributXsl;
 	attributXsl = p_xslNode->getAttMap().find("match");
-	if ( (p_xslNode->getName().first == "xsl") && (p_xslNode->getName().second == "template") && (attributXsl != p_xslNode->getAttMap().end())
-		&& ((*attributXsl).second == name.second)){
-			std::cout<<"=)"<<std::endl;
+	if ( (p_xslNode->getName().first == "xsl") && (p_xslNode->getName().second == "template")
+		&& (attributXsl != p_xslNode->getAttMap().end()) && ((*attributXsl).second == name.second)){
+			p_xslNode->toHtml(0, this, file, level);
+	}else{
+		// level == 0 correspond au fait que notre objet est le noeud xml racine
+		// donc si aucun template n'a été trouvé, l'affichage ne se fera pas.
+		if (level == 0)
+		{
+		}else{	// Cas du <apply-template />
+			fputs (toStringNode(level).c_str(),&file);
+			ElementList::iterator elementIt;
+			for (elementIt = children.begin(); elementIt != children.end(); elementIt++)
+			{
+				(*elementIt)->toHtml(p_xslNode, (*elementIt), file, level+1);
+			}
+		}
 	}
 }
 

@@ -25,11 +25,11 @@ int main(int argc,char *argv[]){
 		cout << "[Xylo] Lancement de la vérification du document..." << endl;
 		if(thedoc->isValid())
 		{
-			cout << "[Xylo] Vérification terminé." << endl;
+			cout << "[Xylo] Vérification terminée." << endl;
 		}
 		else
 		{
-			cout << "[Xylo] La validation à échoué" << endl;
+			cout << "[Xylo] La validation a échoué" << endl;
 		}
 		delete thedoc;
 	}

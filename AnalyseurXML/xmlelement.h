@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <cstdio>
 #include "../AnalyseurDTD/dtddoc.h"
 
 class XmlNode;
@@ -20,6 +21,8 @@ class XmlElement {
 		virtual bool isValid(DtdDoc & validator) = 0;
 		
 		virtual void setParent(XmlNode * newParent);
+
+		virtual void toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level = 0);
 		
 		XmlNode * getParent();
 		

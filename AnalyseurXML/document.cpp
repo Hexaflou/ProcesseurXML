@@ -87,8 +87,6 @@ string Document::toString()
 
 void Document::toTree(Document * xslDocument)
 {
-	ofstream file("test.html", ios::out | ios::trunc);  //déclaration du flux et ouverture du fichier
-
 	FILE * fid;
 	fid = fopen("test.html","w");
 
@@ -97,8 +95,8 @@ void Document::toTree(Document * xslDocument)
 		cerr << "Erreur à l'ouverture !" << endl;
             	
         }
-        //else  // sinon
-        //        root.toHtml(xslDocument->getRoot(), 0, *fid, 0);
+        else  // sinon
+                root.toHtml(xslDocument->getRoot(), 0, *fid, 0);
                 fclose(fid);
 }
 

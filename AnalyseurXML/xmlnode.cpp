@@ -231,6 +231,8 @@ XmlElement* XmlNode::transformToXsltTree(){
 		}else if (name.second == "template")
 		{
 			newNode = new XslTemplate(name);
+		}else{
+			newNode = new XmlNode();
 		}
 	}else
 	{

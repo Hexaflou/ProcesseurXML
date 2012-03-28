@@ -3,14 +3,15 @@
 #include "commun.h"
 #include <iostream>
 
-void xylodtderror(DtdDoc *d, char *msg);
+void xylodtderror(DtdDoc *d, char const *msg);
 static int yywrap(void);
 int xylodtdlex(void);
 
 %}
 
-
 %parse-param {DtdDoc *d}
+
+%error-verbose
 
 %union { 
 	char *s;

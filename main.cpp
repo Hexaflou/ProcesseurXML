@@ -71,12 +71,12 @@ int main(int argc, char *argv[])
 	return codeRetour;
 }
 
-void xyloxmlerror(Document * d, char *msg)
+void xyloxmlerror(Document * d, char const *msg)
 {
 	cerr << "[XML parser] " << msg << endl;
 }
 
-void xylodtderror(DtdDoc * d, char *msg)
+void xylodtderror(DtdDoc * d, char const *msg)
 {
 	cerr << "[DTD parser] " << msg << endl;
 }

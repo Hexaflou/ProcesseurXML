@@ -7,13 +7,15 @@
 #include "document.h"
 #include "cdata.h"
 
-void xyloxmlerror(Document *d, char *msg);
+void xyloxmlerror(Document *d, char const *msg);
 static int yywrap(void);
 int xyloxmllex(void);
 
 %}
 
 %parse-param {Document *d}
+
+%error-verbose
 
 %union {
    char * s;
@@ -80,7 +82,8 @@ attributes_opt /* AttMap */
  ;
 
 attribute /* Attribut */
- : IDENT EQ STRING			{$$ = new Attribut($1,$3);}
+ : IDENT EQ STRING			{ $$ = new Attribut($1, $3); }
+ | NSIDENT EQ STRING    { $$ = new Attribut($1, $3); }
  ;
 
 start /* ElementName */
@@ -92,8 +95,14 @@ empty_or_content /* vector<XmlElement> */
  | close_content_and_end CLOSE		{ $$=$1; }
  ;
 close_content_and_end /* vector<XmlElement> */
- : CLOSE	content_opt END 	{ $$=$2; }
+ : CLOSE content_opt end 	{ $$=$2; }
  ;
+
+end /* void */ 
+ : END
+ | NSEND
+ ;
+ 
 content_opt /* vector<XmlElement> */
  : content_opt DATA			{ $$ = $1; $$->push_back(new Cdata($2)); }
  | content_opt comment    { $$ = $1; }

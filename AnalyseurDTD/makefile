@@ -6,7 +6,7 @@ EDL	= g++
 LDFLAGS	= -g -DDYDEBUG=1
 LIBS = 
 SRC	= $(wildcard *.cpp)
-OBJS	= $(SRC:.cpp=.o) lex.$(DTDPREFIX).o  $(DTDPREFIX).tab.o
+OBJS	= $(SRC:.cpp=.o) lex.$(DTDPREFIX).o $(DTDPREFIX).tab.o
 EXE     = analyseDTD
 
 all: analyseDTD

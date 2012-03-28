@@ -5,6 +5,8 @@
 #include "xmlelement.h"
 #include "xmlnode.h"
 #include "commun.h"
+#include "xsltemplate.h"
+#include "xslapplytemplate.h"
 #include "../AnalyseurDTD/dtddoc.h"
 
 using namespace std;
@@ -219,6 +221,37 @@ void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int
 			}
 		}
 	}
+}
+
+XmlNode* XmlNode::transformToXsltTree(){
+	XmlNode * newNode;
+	if (name.first == "xsl"){
+		if (name.second == "apply-templates")	// On ne prend pas en compte le cas où apply-templates a un paramètre
+		{
+			newNode = new XslApplyTemplate(name);
+		}else if (name.second == "template")
+		{
+			newNode = new XslTemplate(name);
+		}
+	}else
+	{
+		newNode = new XmlNode();
+	}
+
+	// Copie des attributs
+	AttMap::iterator attributIt;
+	for (attributIt = attributs.begin(); attributIt != attributs.end(); attributIt++)
+	{
+		newNode->addAttribute(*attributIt);
+	}
+
+	// On lance la fonction récursivement sur les fils
+	ElementList::iterator elementIt;
+	for (elementIt = children.begin(); elementIt != children.end(); elementIt++)
+	{
+		newNode->addChild((*elementIt)->transformToXsltTree());
+	}
+	return newNode;
 }
 
 XmlNode::~XmlNode()

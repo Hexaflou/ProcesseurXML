@@ -16,7 +16,7 @@ int main(int argc,char *argv[]){
 	{
 		Document * thedoc = new Document(string(argv[1]));
 		
-		cout << "[Xylo] Bienvenu dans l'application" << endl;
+		cout << "[Xylo] Bienvenue dans l'application" << endl;
 		cout << "[Xylo] Lancement de l'analyseur XML..." << endl;
 		
 		thedoc->parse();
@@ -26,6 +26,11 @@ int main(int argc,char *argv[]){
 		if(thedoc->isValid())
 		{
 			cout << "[Xylo] Vérification terminée." << endl;
+			Document * thedocxslt = new Document(string(argv[2]));
+			thedocxslt->parse();
+			Document * newdocxslt = thedocxslt->transformToXsltTree();
+			delete thedocxslt;
+			thedoc->toTree(newdocxslt);
 		}
 		else
 		{

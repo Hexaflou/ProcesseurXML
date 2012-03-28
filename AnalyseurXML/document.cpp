@@ -53,6 +53,7 @@ XmlNode * Document::getRoot()
 	return &root;
 }
 
+
 void Document::setDoctype(Doctype & newDoctype)
 {
 	doctype = newDoctype;
@@ -103,4 +104,22 @@ void Document::toTree(Document * p_xslDocument)
         else  // sinon
                 root.toHtml(p_xslDocument->getRoot(), 0, *fid, 0);
                 fclose(fid);
+}
+
+Document* Document::transformToXsltTree()
+{
+	if (root.getName().first == "xsl"){
+		XmlNode * newRoot = new XmlNode(root);
+		ElementList::iterator elementIt;
+		ElementList xmlChildren = root.getDirectChildren();
+		for (elementIt = xmlChildren.begin(); elementIt != xmlChildren.end(); elementIt++)
+		{
+			newRoot->addChild((*elementIt)->transformToXsltTree());
+		}
+		Document * newDocument = new Document(filepath);
+		newDocument->setRoot(*newRoot);
+		return newDocument;
+	}else{
+		return 0;
+	}
 }

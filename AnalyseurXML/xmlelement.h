@@ -27,6 +27,8 @@ class XmlElement {
 		XmlNode * getParent();
 		
 		virtual ~XmlElement();
+
+		virtual XmlNode* transformToXsltTree();
 };
 
 typedef std::list<XmlElement*> ElementList;

@@ -49,7 +49,8 @@ class XmlNode : public XmlElement {
 		
 		//destructeur
 		virtual ~XmlNode();
-		
+
+		XmlNode* transformToXsltTree();
 };
 
 #endif

@@ -33,8 +33,8 @@ class Document
 
 		void toTree(Document * p_xslDocument);
 
-		
-	
+		Document* transformToXsltTree();
+
 };
 #endif
 

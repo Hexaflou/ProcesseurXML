@@ -45,11 +45,5 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
-	<!-- Template pour les titres de section -->
-	<xsl:template match="section/titre">
-		<h2>
-			<xsl:apply-templates />
-		</h2>
-	</xsl:template>
 
 </xsl:stylesheet>

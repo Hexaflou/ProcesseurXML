@@ -24,3 +24,8 @@ XmlNode * XmlElement::getParent()
 {
 	return parent;
 }
+
+void XmlElement::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int level)
+{
+	// TODO: Remove this stub.
+}

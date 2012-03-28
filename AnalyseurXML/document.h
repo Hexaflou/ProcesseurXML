@@ -21,13 +21,13 @@ class Document
                  * @param doctype Doctype associé au document.
                  * @param root Noeud racine du document.
                  */
-		Document(std::string & filepath, Doctype & doctype, XmlNode & root);
+		Document(std::string filepath, Doctype & doctype, XmlNode & root);
                 
                 /**
                  * Crée un objet Document à partir de son chemin.
                  * @param filepath Chemin du document à créer.
                  */
-		Document(std::string & filepath);
+		Document(std::string filepath);
 		
 		/**
                  * Lance le parsing du document XML.

@@ -12,12 +12,12 @@ using namespace std;
 int xyloxmlparse(Document *);
 extern FILE * xyloxmlin;
 
-Document::Document(std::string & afilepath, Doctype & adoctype, XmlNode & aroot) :
+Document::Document(std::string afilepath, Doctype & adoctype, XmlNode & aroot) :
 doctype(adoctype), root(aroot), filepath(afilepath)
 {
 }
 
-Document::Document(std::string & afilepath) :
+Document::Document(std::string afilepath) :
 doctype(), root(), filepath(afilepath)
 {
 }
@@ -96,7 +96,7 @@ void Document::toTree(Document * xslDocument)
 		cerr << "Erreur à l'ouverture !" << endl;
             	
         }
-        else  // sinon
-                root.toHtml(p_xslDocument->getRoot(), 0, *fid, 0);
+        //else  // sinon
+        //        root.toHtml(xslDocument->getRoot(), 0, *fid, 0);
                 fclose(fid);
 }

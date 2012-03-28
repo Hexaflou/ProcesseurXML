@@ -7,7 +7,8 @@ using namespace std;
 Doctype::Doctype (string arootName, bool aisPublic, string adtdUrl):
 		rootName(arootName),isPublic(aisPublic),dtdDoc(adtdUrl)
 {
-	parse();
+	if(adtdUrl!="")
+		parse();
 }
 
 Doctype::Doctype (string arootName, string sportee, string adtdUrl):
@@ -17,7 +18,8 @@ Doctype::Doctype (string arootName, string sportee, string adtdUrl):
 	{
 		this->isPublic = true;
 	}
-	parse();
+	if(adtdUrl!="")
+		parse();
 }
 
 string Doctype::toString() const

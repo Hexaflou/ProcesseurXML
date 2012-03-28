@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstdio>
+#include <string>
+
 #include "AnalyseurXML/commun.h"
 #include "AnalyseurXML/xyloxml.h"
 #include "AnalyseurDTD/xylodtd.h"
@@ -9,11 +11,32 @@
 
 using namespace std;
 
-int main(){
-	cout << "[Xylo] Lancement de l'analyseur XML..." << endl;
-	cout << "[Xylo] Lancement de l'analyseur XML terminé." << endl;
-	cout << "[Xylo] Lancement de l'analyseur DTD..." << endl;
-	cout << "[Xylo] Lancement de l'analyseur DTD terminé." << endl;
+int main(int argc,char *argv[]){
+	if(argc == 2)
+	{
+		Document * thedoc = new Document(string(argv[1]));
+		
+		cout << "[Xylo] Bienvenu dans l'application" << endl;
+		cout << "[Xylo] Lancement de l'analyseur XML..." << endl;
+		
+		thedoc->parse();
+		
+		cout << "[Xylo] Lancement de l'analyseur XML terminé." << endl;
+		cout << "[Xylo] Lancement de la vérification du document..." << endl;
+		if(thedoc->isValid())
+		{
+			cout << "[Xylo] Vérification terminé." << endl;
+		}
+		else
+		{
+			cout << "[Xylo] La validation à échoué" << endl;
+		}
+		delete thedoc;
+	}
+	else
+	{
+		cout << "[Xylo] Merci de préciser un nom de fichier à traiter pour commencer." << endl;
+	}
 	return 0;
 }
 

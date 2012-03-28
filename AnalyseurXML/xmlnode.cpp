@@ -157,8 +157,8 @@ string XmlNode::getDirectChildrenNames() {
 			namelist += (**eit).getSemName() + " ";
 	}
 
-	if(namelist.size() > 0)
-		namelist.resize(namelist.size() - 1); // Removing the last space
+	/*if(namelist.size() > 0)
+	namelist.resize(namelist.size() - 1);*/ // Removing the last space
 
 	return namelist;
 }

@@ -15,7 +15,10 @@ class Document
 	
 	public :
 		Document(std::string & filepath, Doctype & doctype, XmlNode & root);
-		Document(std::string & filepath);
+		Document(std::string filepath);
+		
+		//Si construit uniquement avec un filepath.
+		bool parse();
 		
 		// La racine ne doit pas avoir de parent;
 		bool setRoot(XmlNode & root);

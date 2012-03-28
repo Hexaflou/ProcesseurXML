@@ -7,12 +7,29 @@
 #include "../AnalyseurDTD/dtddoc.h"
 
 using namespace std;
+int xyloxmlparse(Document *);
+extern FILE * xyloxmlin;
 
 Document::Document(std::string & afilepath, Doctype & adoctype, XmlNode & aroot):
 		doctype(adoctype),root(aroot),filepath(afilepath){}
 
-Document::Document(std::string & afilepath):
+Document::Document(std::string afilepath):
 		doctype(),root(),filepath(afilepath){}
+		
+bool Document::parse()
+{
+	FILE * fid;
+	fid = fopen(filepath.c_str(),"r");
+	if(!fid)
+	{
+		cerr << "E: XML file " << filepath << " can't be read." << endl;
+		return false;
+	}
+	xyloxmlin = fid;
+	bool ret = (xyloxmlparse(this) == 0);
+	fclose(fid);
+	return ret;
+}
 
 // La racine ne doit pas avoir de parent;
 bool Document::setRoot(XmlNode & newRoot)

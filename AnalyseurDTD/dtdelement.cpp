@@ -1,5 +1,7 @@
 #include <string>
 #include <set>
+#include <iostream>
+#include <algorithm>
 
 #include "dtdelement.h"
 #include "dtdattribute.h"
@@ -79,10 +81,13 @@ bool DtdElement::validate(AttMap xmlAttributes) const
 
 bool DtdElement::validate(std::string childrenNames) const
 {
-	static boost::regex reg(regexPattern);
+	string patt("^"+regexPattern+"( *)$");
+	replace(patt.begin(),patt.end(),',',' ');
+	boost::regex reg(patt, boost::regex::extended);
 	if(!boost::regex_match(childrenNames, reg))
 	{
-		cout << "Children of the node " << name << "are not valid." << endl;
+		cout << "Children of the node " << name << " are not valid." << endl;
+		cout << "Pattern is \" " << patt << " \" and the children list is \" " << childrenNames << " \""<<endl; 
 		return false;
 	}
 	return true;

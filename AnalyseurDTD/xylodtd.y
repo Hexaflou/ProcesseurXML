@@ -110,7 +110,7 @@ enum_list
 | item_enum			{$$ = new string(*$1);}
 ;
 item_enum
-: IDENT		{$$ = new string($1);}
+	: IDENT		{$$ = new string("("+string($1)+" )");}
 | PCDATA  {$$ = new string($1);}
 ;
 

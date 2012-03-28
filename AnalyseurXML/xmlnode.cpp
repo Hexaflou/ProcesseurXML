@@ -1,6 +1,7 @@
 #include <string>
 #include <list>
 
+
 #include "xmlelement.h"
 #include "xmlnode.h"
 #include "commun.h"
@@ -119,6 +120,10 @@ ElementName XmlNode::getName() const {
 	return name;
 }
 
+AttMap XmlNode::getAttMap() const{
+	return attributs;
+}
+
 bool XmlNode::isValid(DtdDoc & validator)
 {
 	//validation des attributs
@@ -161,6 +166,16 @@ string XmlNode::getDirectChildrenNames() {
 	namelist.resize(namelist.size() - 1);*/ // Removing the last space
 
 	return namelist;
+}
+
+void XmlNode::toHtml(XmlNode * p_xslNode, XmlNode * p_xmlNode)
+{
+	AttMapIt attributXsl;
+	attributXsl = p_xslNode->getAttMap().find("match");
+	if ( (p_xslNode->getName().first == "xsl") && (p_xslNode->getName().second == "template") && (attributXsl != p_xslNode->getAttMap().end())
+		&& ((*attributXsl).second == name.second)){
+			std::cout<<"=)"<<std::endl;
+	}
 }
 
 XmlNode::~XmlNode()

@@ -1,0 +1,5 @@
+Fonctionnement beaucoup plus simple :
+
+document : DtdDoc
+!ELEMENT : DtdElement, contenu stocké sous forme de regex + list de DtdAttribute
+!ATTLIST : DtdAttribute, a un nom

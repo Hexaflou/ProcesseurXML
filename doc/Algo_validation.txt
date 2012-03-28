@@ -1,0 +1,20 @@
+Fichier XML parsé (sans erreurs)
+
+Doctype déclaré (objet doctype.c)
+
+Parsé la DTD
+
+IdValid Document :
+check si la racine colle avec ce que le doctype définit
+--> ensuite appelé récursivement sur chaque fils (noeud ou CDATA)
+
+IsValid XmlNode :
+
+(vérifie si le namespace colle bien, sinon regarde juste les fils)
+valide les attributs, s'ils sont bien autorisés
+valide si tous les fils sont ok
+--> s'appelle récursivement sur les fils
+
+IsValid CDATA :
+
+return true (string done pas de validation à faire, pas de balisage dedans)

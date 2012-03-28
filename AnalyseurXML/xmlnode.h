@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <iostream>
 
 #include "xmlelement.h"
 #include "commun.h"
@@ -33,6 +34,7 @@ class XmlNode : public XmlElement {
 		void addChild(XmlElement * element);
 
 		ElementName getName() const;
+		AttMap getAttMap() const;
 		virtual std::string getSemName() const;
 		
 		//Getters
@@ -40,6 +42,9 @@ class XmlNode : public XmlElement {
 
 		ElementList getDirectChildren();
 		std::string getDirectChildrenNames();
+
+		//Affichage en html
+		void toHtml(XmlNode * p_xslNode, XmlNode * p_xmlNode);
 		
 		//destructeur
 		virtual ~XmlNode();

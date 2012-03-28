@@ -222,7 +222,7 @@ void XmlNode::toHtml(XmlNode * p_xslNode, XmlElement * p_xmlNode, FILE file, int
 	}
 }
 
-XmlNode* XmlNode::transformToXsltTree(){
+XmlElement* XmlNode::transformToXsltTree(){
 	XmlNode * newNode;
 	if (name.first == "xsl"){
 		if (name.second == "apply-templates")	// On ne prend pas en compte le cas où apply-templates a un paramètre

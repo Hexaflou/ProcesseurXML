@@ -67,7 +67,7 @@ class XmlElement {
 		
 		virtual ~XmlElement();
 
-		virtual XmlNode* transformToXsltTree() = 0;
+		virtual XmlElement* transformToXsltTree() = 0;
 };
 
 typedef std::list<XmlElement*> ElementList;

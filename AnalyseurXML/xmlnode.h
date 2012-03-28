@@ -50,7 +50,7 @@ class XmlNode : public XmlElement {
 		//destructeur
 		virtual ~XmlNode();
 
-		XmlNode* transformToXsltTree();
+		XmlElement* transformToXsltTree();
 };
 
 #endif

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.4">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>90</x>
+      <y>250</y>
+      <w>160</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>DocumentXsl
+--
+-filepath : string
+-xslMap : XslMap
+--
++toString() : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>420</x>
+      <y>200</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>XslTemplate
+--
+
+--
++toHtml() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>420</x>
+      <y>320</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>XslApplyTemplate
+--
+
+--
++toHtml() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

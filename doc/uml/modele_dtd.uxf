@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.4">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>10</x>
+      <y>300</y>
+      <w>350</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>DtdDoc
+--
+-filepath : string
+-elements : ElemMap
+-RetElemInsert : pair&lt;ElemMap::iterator, bool&gt;
+-MapElem : pair&lt;string, DtdElement&gt;
+--
++addElement : bool
++addAttributeToElement : bool
++validate() : bool
++toString : string
++parse() : bool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>540</x>
+      <y>180</y>
+      <w>240</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>DtdElement
+--
+-name : string
+-attributs : set&lt;DtdAttribute&gt;
+-regexPattern : string
+--
++addAtribute : bool
++toString : string
++attributeListToString() : string
++completeChildPattern : void
++validate : bool
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>330</x>
+      <y>200</y>
+      <w>230</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;180;110;180;110;30;210;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>530</x>
+      <y>480</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>DtdAttribute
+--
+-name: string
+-parent : DtdElement*
+--
++toString() : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>720</x>
+      <y>200</y>
+      <w>160</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;</panel_attributes>
+    <additional_attributes>30;330;140;330;140;30;60;30</additional_attributes>
+  </element>
+</diagram>

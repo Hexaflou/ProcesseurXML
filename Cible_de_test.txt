@@ -1,0 +1,1 @@
+Pour lancer les tests, aller dans le dossier /tests, et faire "make" : le Makefile compile l'exécutable puis lancera la chaîne parse/validation/transformation sur le fichier rap1.xml

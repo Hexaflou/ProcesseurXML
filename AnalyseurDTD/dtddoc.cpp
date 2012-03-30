@@ -78,7 +78,7 @@ bool DtdDoc::parse()
 	// Au cas où on n'arrive pas à le lire...
 	if (!fid) {
 		// ...on informe en disant pourquoi
-		cerr << "[Validation] Dtd file \"" << filepath << "\" can't be read : " << strerror() << endl;
+		cerr << "[Validation] Dtd file \"" << filepath << "\" can't be read " << endl;
 		return false;
 	}
 	
